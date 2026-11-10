@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeQuest - RPG Acadêmico</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-dark text-light">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary shadow-sm" id="main-nav" style="display: none;">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">⚔️ LifeQuest</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link active" href="#" onclick="showSection('profile-section')">Perfil</a>
+                <a class="nav-link" href="#" onclick="showSection('quests-section')">Missões</a>
+                <a class="nav-link" href="#" onclick="showSection('shop-section')">Loja</a>
+                <a class="nav-link" href="#" onclick="showSection('guild-section')">Guilda & Chefe</a>
+                <button class="btn btn-outline-light btn-sm ms-3" onclick="logout()">Sair</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        
+        <!-- Seção de Autenticação (Login / Cadastro) -->
+        <div id="auth-section" class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card bg-secondary text-light p-4 shadow">
+                    <h3 class="text-center mb-4" id="auth-title">Entrar no LifeQuest</h3>
+                    <div id="auth-alert" class="alert alert-danger d-none" role="alert"></div>
+                    
+                    <form id="auth-form" onsubmit="handleAuth(event)">
+                        <div class="mb-3" id="email-group" style="display: none;">
+                            <label class="form-label">E-mail</label>
+                            <input type="email" id="email" class="form-control bg-dark text-light border-0">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Usuário</label>
+                            <input type="text" id="username" class="form-control bg-dark text-light border-0" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Senha</label>
+                            <input type="password" id="password" class="form-control bg-dark text-light border-0" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100" id="auth-btn">Entrar</button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <button class="btn btn-link text-light text-decoration-none" id="toggle-auth" onclick="toggleAuthMode()">Não tem uma conta? Cadastre-se</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção Principal (Painel do Jogo) -->
+        <div id="game-section" style="display: none;">
+            
+            <!-- Perfil / Personagem -->
+            <div id="profile-section" class="game-panel">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card bg-secondary p-3 mb-4">
+                            <h4>Status do Herói</h4>
+                            <div id="character-info"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card bg-secondary p-3 mb-4" id="create-char-container" style="display: none;">
+                            <h4>Criar seu Personagem</h4>
+                            <form onsubmit="createCharacter(event)">
+                                <div class="mb-3">
+                                    <label class="form-label">Nome do Personagem</label>
+                                    <input type="text" id="char-name" class="form-control bg-dark text-light" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Classe</label>
+                                    <select id="char-class" class="form-control bg-dark text-light" required></select>
+                                </div>
+                                <button type="submit" class="btn btn-success">Criar Herói</button>
+                            </form>
+                        </div>
+                        <div class="card bg-secondary p-3">
+                            <h4>Inventário</h4>
+                            <ul id="inventory-list" class="list-group list-group-flush bg-transparent"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Missões -->
+            <div id="quests-section" class="game-panel" style="display: none;">
+                <h3>Mural de Missões</h3>
+                <div class="row" id="quests-container"></div>
+            </div>
+
+            <!-- Loja -->
+            <div id="shop-section" class="game-panel" style="display: none;">
+                <h3>Loja de Equipamentos</h3>
+                <div class="row" id="shop-container"></div>
+            </div>
+
+            <!-- Guilda e Chefe Comunitário -->
+            <div id="guild-section" class="game-panel" style="display: none;">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card bg-secondary p-3 mb-4">
+                            <h3>Chefe Comunitário</h3>
+                            <div id="boss-info"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card bg-secondary p-3">
+                            <h3>Membros da Guilda</h3>
+                            <ul id="guild-list" class="list-group list-group-flush"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
