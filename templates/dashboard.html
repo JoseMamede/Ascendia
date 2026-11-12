@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ascendia - Retro 16-Bit RPG Hub</title>
+<!-- Google Fonts: Silkscreen, Press Start 2P, EB Garamond & Space Grotesk -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;family=Silkscreen:wght@400;700&amp;family=EB+Garamond:ital,wght@0,400..800;1,400..800&amp;family=Geist:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "error": "#ffb4ab",
+            "primary": "#f2ca50",
+            "primary-fixed-dim": "#e9c349",
+            "surface-variant": "#30353d",
+            "secondary-fixed": "#6ff6ff",
+            "surface-dim": "#0f141b",
+            "on-error-container": "#ffdad6",
+            "inverse-surface": "#dee2ec",
+            "surface-container-highest": "#30353d",
+            "surface-container": "#1b2027",
+            "on-tertiary": "#680013",
+            "surface-container-low": "#171c23",
+            "tertiary-container": "#ff9596",
+            "primary-container": "#d4af37",
+            "surface-bright": "#343941",
+            "surface-container-lowest": "#090f15",
+            "on-surface-variant": "#d0c5af",
+            "inverse-primary": "#735c00",
+            "on-secondary-fixed-variant": "#004f53",
+            "on-error": "#690005",
+            "outline": "#99907c",
+            "secondary": "#dcfdff",
+            "tertiary-fixed-dim": "#ffb3b2",
+            "on-tertiary-container": "#8f001f",
+            "on-tertiary-fixed-variant": "#920020",
+            "primary-fixed": "#ffe088",
+            "surface": "#0f141b",
+            "on-primary-container": "#554300",
+            "surface-container-high": "#252a32",
+            "on-primary-fixed-variant": "#574500",
+            "surface-tint": "#e9c349",
+            "on-surface": "#dee2ec",
+            "secondary-fixed-dim": "#00dce6",
+            "outline-variant": "#4d4635",
+            "on-background": "#dee2ec",
+            "tertiary-fixed": "#ffdad9",
+            "inverse-on-surface": "#2c3138",
+            "on-secondary-fixed": "#002022",
+            "error-container": "#93000a",
+            "secondary-container": "#00f1fd",
+            "on-secondary": "#00373a",
+            "on-tertiary-fixed": "#410008",
+            "on-secondary-container": "#006a6f",
+            "background": "#0f141b",
+            "on-primary-fixed": "#241a00",
+            "on-primary": "#3c2f00",
+            "tertiary": "#ffbebd"
+          },
+          "fontFamily": {
+            "pixel": ["'Press Start 2P'", "monospace"],
+            "silkscreen": ["'Silkscreen'", "monospace"],
+            "body-sm": ["Geist", "sans-serif"],
+            "body-md": ["Geist", "sans-serif"],
+            "headline-sm": ["EB Garamond", "serif"],
+            "headline-md": ["EB Garamond", "serif"],
+            "headline-lg": ["EB Garamond", "serif"],
+            "label-sm": ["Space Grotesk", "sans-serif"],
+            "label-md": ["Space Grotesk", "sans-serif"],
+            "label-lg": ["Space Grotesk", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .pixelated {
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
+    }
+    /* Authentic 16-bit RPG Bevel Box */
+    .rpg-box {
+      border: 2px solid #5a4a28;
+      box-shadow: 
+        inset 2px 2px 0px #e9c349, 
+        inset -2px -2px 0px #241a00,
+        0 4px 0 rgba(0,0,0,0.6);
+      background: #141922;
+    }
+    .rpg-box-dark {
+      border: 2px solid #2a303c;
+      box-shadow: 
+        inset 2px 2px 0px #414a58, 
+        inset -2px -2px 0px #090f15,
+        0 3px 0 rgba(0,0,0,0.7);
+      background: #121720;
+    }
+    .rpg-btn-gold {
+      background: linear-gradient(180deg, #ffe088 0%, #d4af37 60%, #8c6d17 100%);
+      box-shadow: 0 4px 0 #4a3805, 0 6px 0 #000;
+      border: 2px solid #fff5cc;
+    }
+    .rpg-btn-gold:active {
+      transform: translateY(3px);
+      box-shadow: 0 1px 0 #4a3805, 0 2px 0 #000;
+    }
+    /* Pixel Step Progress Meter */
+    .pixel-bar-track {
+      background: #090f15;
+      border: 2px solid #2b3340;
+      box-shadow: inset 1px 1px 0 #000, 1px 1px 0 #4d4635;
+      position: relative;
+    }
+    .pixel-bar-segmented {
+      background-size: 8px 100%;
+      background-image: linear-gradient(90deg, transparent 7px, rgba(0, 0, 0, 0.6) 7px);
+    }
+    @keyframes pixelPulseGlow {
+      0%, 100% { filter: drop-shadow(0 0 6px rgba(242, 202, 80, 0.7)); }
+      50% { filter: drop-shadow(0 0 14px rgba(0, 241, 253, 0.9)); }
+    }
+    .pixel-crystal-glow {
+      animation: pixelPulseGlow 2.5s steps(6, end) infinite;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: #090f15;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #d4af37;
+      border: 1px solid #000;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface antialiased min-h-screen pb-28 selection:bg-primary selection:text-surface-container-lowest font-body-md">
+<!-- Mobile Lock Max Container -->
+<div class="max-w-md mx-auto relative bg-[#0d1219] shadow-2xl min-h-screen flex flex-col border-x-2 border-[#2b3340]">
+<!-- Retro RPG Top Header Bar -->
+<header class="bg-[#121822] border-b-2 border-[#5a4a28] shadow-md flex justify-between items-center w-full px-3 py-2 sticky top-0 z-40">
+<div class="flex items-center space-x-2">
+<span class="font-silkscreen text-lg text-primary tracking-wider font-bold drop-shadow-[2px_2px_0px_#000]">ASCENDIA</span>
+</div>
+<!-- Retro 16-Bit Currency Counter -->
+<div class="flex items-center space-x-2">
+<!-- Gold Coin Pill -->
+<div class="flex items-center space-x-1.5 px-2 py-1 bg-[#090f15] border border-[#d4af37] shadow-[inset_1px_1px_0_#ffeaa7]">
+<span class="w-3.5 h-3.5 rounded-full bg-[#f2ca50] border border-[#8c6d17] inline-flex items-center justify-center font-pixel text-[8px] text-[#3c2f00] font-black leading-none">G</span>
+<span class="font-silkscreen text-[11px] text-primary font-bold">1,450</span>
+</div>
+<!-- Cyan Gem Pill -->
+<div class="flex items-center space-x-1.5 px-2 py-1 bg-[#090f15] border border-[#00f1fd] shadow-[inset_1px_1px_0_#6ff6ff]">
+<span class="w-3 h-3 bg-[#00f1fd] rotate-45 border border-[#00373a] inline-block shrink-0"></span>
+<span class="font-silkscreen text-[11px] text-[#6ff6ff] font-bold">42</span>
+</div>
+</div>
+</header>
+<!-- Main Quest Canvas Content -->
+<main class="flex-1 px-3 py-3 space-y-3.5">
+<!-- Hero Slate 16-Bit Frame Panel -->
+<section class="rpg-box p-3 relative">
+<div class="flex items-center space-x-3.5">
+<!-- Hero Pixel Portrait with Stepped Gold Border -->
+<div class="relative shrink-0">
+<div class="w-16 h-16 p-0.5 bg-[#d4af37] border-2 border-[#090f15] shadow-[0_0_0_2px_#ffe088] pixelated bg-[#18202c]">
+<img alt="Hero Valerie 16-Bit Pixel Portrait" class="w-full h-full object-cover pixelated" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXPwC1y1JyCRStRUOzvWCu4VR2Ictig-PSjWEk2hzD9UfmqLkgVOLTvMogPj8komCHRuqwYfa05nbG2UUlLtNB9iTFVOa-YpaPTdSQyI4G1xSmQIj0TSqh7jHkAy6Szgg2EfRw9_5scXJSxfOdR8elbb0VL0xU9ISbqowD7thonDWe6Q-hiMNLn31egziRNuptEKG_ekYDW9Ee2ArHVwlXgBnOxZJLMGkwF9XSSAo"/>
+</div>
+<div class="absolute -bottom-2 -right-1 px-1.5 py-0.5 bg-[#ffe088] text-[#241a00] font-silkscreen text-[9px] font-bold border-2 border-[#241a00] shadow-[1px_1px_0_#000]">
+            LV.14
+          </div>
+</div>
+<!-- Hero Vitals HUD & Segmented 16-Bit Meters -->
+<div class="flex-1 min-w-0">
+<div class="flex items-baseline justify-between mb-1.5">
+<h1 class="font-silkscreen text-sm text-primary font-bold tracking-wide drop-shadow-[1px_1px_0_#000] truncate">SIR VALERIE</h1>
+<span class="font-silkscreen text-[9px] text-[#8fa2b8] tracking-widest uppercase">PALADIN</span>
+</div>
+<!-- Retro Segmented HP Bar (Ruby Red) -->
+<div class="space-y-1 mb-2">
+<div class="flex justify-between items-center font-silkscreen text-[9px]">
+<span class="text-[#ff4757] font-bold flex items-center">
+<span class="inline-block w-2 h-2 bg-[#ff4757] mr-1 border border-[#680013]"></span>HP
+              </span>
+<span class="text-[#ff9596] font-pixel text-[8px]">420/450</span>
+</div>
+<div class="h-3 w-full pixel-bar-track p-0.5">
+<div class="h-full bg-gradient-to-r from-[#b30021] via-[#ff3838] to-[#ff4d4d] pixel-bar-segmented" style="width: 93%;"></div>
+</div>
+</div>
+<!-- Retro Segmented XP / Mana Gauge (Arcane Cyan) -->
+<div class="space-y-1">
+<div class="flex justify-between items-center font-silkscreen text-[9px]">
+<span class="text-[#00f1fd] font-bold flex items-center">
+<span class="inline-block w-2 h-2 bg-[#00f1fd] mr-1 border border-[#00373a]"></span>XP GAIN
+              </span>
+<span class="text-[#6ff6ff] font-pixel text-[8px]">1850/2400</span>
+</div>
+<div class="h-3 w-full pixel-bar-track p-0.5">
+<div class="h-full bg-gradient-to-r from-[#005f73] via-[#0a9396] to-[#00f1fd] pixel-bar-segmented" style="width: 77%;"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Community Raid Boss Banner (16-Bit Pixel Dragon Encounter) -->
+<section class="rpg-box-dark overflow-hidden border-2 border-[#e74c3c] shadow-[0_0_15px_rgba(231,76,60,0.25)] relative">
+<!-- Banner Visual -->
+<div class="relative h-44 w-full bg-black">
+<img alt="Ignis Ancient Pyragor Boss Raid" class="w-full h-full object-cover pixelated" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwkvEm8DrcgrnnMyrLNJrbDRHk7mX0W3R0NRpKyY45V8-3-a83KgBIjgULDRNRtoK576dAtHkbXVNhblhsPS2bG4EZ0vdFHQ6Q2nDVrg2IeIlTyNMmlWl1ckA5SKNVkUdYQkJYeDofFXzia2lFg5agbBHui0sC7DXj5HBLhPH90QSNaPM6FYewPEMX4JXwGiTiX2QEeiGyAG7Og9L4pkbFc85FsLRKs5mFnXcQlMU"/>
+<div class="absolute inset-0 bg-gradient-to-t from-[#121720] via-transparent to-transparent"></div>
+<!-- Retro Timer Pill -->
+<div class="absolute top-2 right-2 flex items-center space-x-1 px-2 py-1 bg-[#090f15]/90 border border-[#ff4757] shadow-[2px_2px_0_#000]">
+<span class="w-2 h-2 bg-[#ff4757] animate-ping inline-block rounded-full"></span>
+<span class="font-silkscreen text-[9px] text-[#ffbebd] font-bold">18H 42M LEFT</span>
+</div>
+<!-- Boss HUD Label Overlay -->
+<div class="absolute bottom-2 left-2.5 right-2.5">
+<div class="flex items-center space-x-1 text-[#ff7979] mb-0.5">
+<span class="font-silkscreen text-[8px] tracking-widest bg-[#680013] px-1 py-0.5 border border-[#ff4757]">RAID BOSS ENCOUNTER</span>
+</div>
+<h2 class="font-pixel text-[11px] text-[#ffeaa7] font-bold tracking-wider drop-shadow-[2px_2px_0_#000]">IGNIS, WORLD-EATER</h2>
+</div>
+</div>
+<!-- Boss HP Meter & Battle Stats Frame -->
+<div class="p-2.5 pt-1 space-y-2 bg-[#121720]">
+<div class="space-y-1">
+<div class="flex justify-between items-center font-silkscreen text-[9px] text-[#d0c5af]">
+<span class="text-[#ffbebd]">BOSS HP (68% LEFT)</span>
+<span class="font-pixel text-[8px] text-[#ff4757]">68,420 / 100K</span>
+</div>
+<div class="h-3.5 w-full pixel-bar-track p-0.5 border-[#93000a]">
+<div class="h-full bg-gradient-to-r from-[#93000a] via-[#e84118] to-[#ff4757] pixel-bar-segmented" style="width: 68%;"></div>
+</div>
+</div>
+<!-- Contribution Stats Strip -->
+<div class="flex items-center justify-between font-silkscreen text-[9px] bg-[#090f15] p-2 border border-[#2b3340]">
+<span class="flex items-center text-primary">
+<span class="material-symbols-outlined text-xs mr-1 text-primary">swords</span>
+            150 DMG / QUEST
+          </span>
+<span class="text-[#6ff6ff] font-bold border border-[#00f1fd]/40 bg-[#00f1fd]/10 px-1.5 py-0.5">
+            CONTRIB: <span class="text-primary">+1,200</span>
+</span>
+</div>
+</div>
+</section>
+<!-- Daily Bounties Quests Section -->
+<section class="space-y-2.5">
+<div class="flex justify-between items-center pt-1">
+<div>
+<h3 class="font-silkscreen text-sm text-[#ffeaa7] font-bold drop-shadow-[1px_1px_0_#000]">TODAY'S BOUNTIES</h3>
+<p class="font-silkscreen text-[9px] text-[#8fa2b8]">4/6 COMPLETED (GUILD: 100%)</p>
+</div>
+<!-- Retro 16-Bit Command Button -->
+<button class="rpg-btn-gold px-2.5 py-1.5 text-black font-silkscreen text-[10px] font-bold tracking-wider flex items-center space-x-1" id="open-drawer-btn">
+<span class="font-pixel text-[9px]">+</span>
+<span>NEW QUEST</span>
+</button>
+</div>
+<!-- Vertically Stacked 16-Bit Bounty Cards -->
+<div class="space-y-2">
+<!-- Card 1: Completed State -->
+<div class="p-2.5 bg-[#0e141c] border-2 border-[#303846] flex items-center justify-between opacity-75 hover:opacity-100 transition-opacity">
+<div class="flex items-center space-x-2.5 min-w-0">
+<!-- Pixel Sprite Icon Box -->
+<div class="w-9 h-9 bg-[#1b2230] border border-[#4a5568] flex items-center justify-center shrink-0 text-[#f2ca50] shadow-[inset_1px_1px_0_#2d3748]">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">water_drop</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center space-x-1.5">
+<h4 class="font-silkscreen text-xs text-on-surface line-through truncate font-bold">Slay Morning Sloth</h4>
+<span class="px-1 py-0.2 font-silkscreen text-[8px] bg-[#252a32] text-[#d0c5af] border border-[#4d4635]">MED</span>
+</div>
+<div class="flex items-center space-x-2 font-silkscreen text-[9px] text-[#8fa2b8] mt-0.5">
+<span>30m Cardio</span>
+<span class="text-primary font-bold">+50 XP</span>
+<span class="text-primary font-bold">+25 G</span>
+</div>
+</div>
+</div>
+<!-- Pixel Done Checkbox -->
+<button class="w-7 h-7 bg-[#241a00] border-2 border-[#f2ca50] flex items-center justify-center text-[#f2ca50] shadow-[inset_1px_1px_0_#ffe088] active:scale-90">
+<span class="material-symbols-outlined text-sm font-black">check</span>
+</button>
+</div>
+<!-- Card 2: Arcane Tome Study -->
+<div class="p-2.5 bg-[#141b24] border-2 border-[#2b3340] hover:border-[#00f1fd] transition-colors flex items-center justify-between shadow-[2px_2px_0_#000]">
+<div class="flex items-center space-x-2.5 min-w-0">
+<div class="w-9 h-9 bg-[#0b1017] border border-[#00f1fd]/50 flex items-center justify-center shrink-0 text-[#00f1fd] shadow-[inset_1px_1px_0_#0077b6]">
+<span class="material-symbols-outlined text-lg">menu_book</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center space-x-1.5">
+<h4 class="font-silkscreen text-xs text-[#dee2ec] font-bold truncate">Arcane Tome Study</h4>
+<span class="px-1 py-0.2 font-silkscreen text-[8px] bg-[#00f1fd]/10 text-[#00f1fd] border border-[#00f1fd]/40">EASY</span>
+</div>
+<div class="flex items-center space-x-2 font-silkscreen text-[9px] text-[#8fa2b8] mt-0.5">
+<span>Due 02:00 PM</span>
+<span class="text-primary font-bold">+30 XP</span>
+<span class="text-primary font-bold">+15 G</span>
+</div>
+</div>
+</div>
+<!-- Chunky Pixel Checkbox -->
+<button class="w-7 h-7 bg-[#090f15] border-2 border-[#5a6578] hover:border-[#00f1fd] flex items-center justify-center shadow-[inset_2px_2px_0_#000] active:scale-90">
+</button>
+</div>
+<!-- Card 3: Conquer Code Citadel (Mythic Quest) -->
+<div class="p-2.5 bg-[#171a17] border-2 border-[#f2ca50] flex items-center justify-between shadow-[2px_2px_0_#000,0_0_10px_rgba(242,202,80,0.15)]">
+<div class="flex items-center space-x-2.5 min-w-0">
+<div class="w-9 h-9 bg-[#241a00] border-2 border-[#f2ca50] flex items-center justify-center shrink-0 text-[#f2ca50] shadow-[inset_1px_1px_0_#ffe088]">
+<span class="material-symbols-outlined text-lg">terminal</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center space-x-1.5">
+<h4 class="font-silkscreen text-xs text-[#ffeaa7] font-bold truncate">Conquer Code Citadel</h4>
+<span class="px-1 py-0.2 font-silkscreen text-[8px] bg-[#f2ca50] text-[#241a00] font-black border border-[#ffe088]">MYTHIC</span>
+</div>
+<div class="flex items-center space-x-2 font-silkscreen text-[9px] text-[#8fa2b8] mt-0.5">
+<span>Due 06:00 PM</span>
+<span class="text-primary font-bold">+120 XP</span>
+<span class="text-primary font-bold">+80 G</span>
+<span class="text-[#00f1fd] font-bold">★ RARE</span>
+</div>
+</div>
+</div>
+<button class="w-7 h-7 bg-[#090f15] border-2 border-[#d4af37] hover:border-primary flex items-center justify-center shadow-[inset_2px_2px_0_#000] active:scale-90">
+</button>
+</div>
+<!-- Card 4: Mind Fortress Meditation -->
+<div class="p-2.5 bg-[#141b24] border-2 border-[#2b3340] hover:border-[#ff9596] transition-colors flex items-center justify-between shadow-[2px_2px_0_#000]">
+<div class="flex items-center space-x-2.5 min-w-0">
+<div class="w-9 h-9 bg-[#0b1017] border border-[#ff9596]/50 flex items-center justify-center shrink-0 text-[#ffbebd] shadow-[inset_1px_1px_0_#93000a]">
+<span class="material-symbols-outlined text-lg">self_improvement</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center space-x-1.5">
+<h4 class="font-silkscreen text-xs text-[#dee2ec] font-bold truncate">Mind Fortress Meditation</h4>
+<span class="px-1 py-0.2 font-silkscreen text-[8px] bg-[#93000a]/30 text-[#ffbebd] border border-[#ff4757]/40">HARD</span>
+</div>
+<div class="flex items-center space-x-2 font-silkscreen text-[9px] text-[#8fa2b8] mt-0.5">
+<span>Tonight 10 PM</span>
+<span class="text-primary font-bold">+60 XP</span>
+<span class="text-primary font-bold">+35 G</span>
+</div>
+</div>
+</div>
+<button class="w-7 h-7 bg-[#090f15] border-2 border-[#5a6578] hover:border-[#ffbebd] flex items-center justify-center shadow-[inset_2px_2px_0_#000] active:scale-90">
+</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Slide-Up Drawer: 16-Bit JRPG Quest Inscription Scroll Modal -->
+<div class="fixed inset-0 z-50 pointer-events-none transition-all duration-300" id="quest-drawer">
+<!-- Backdrop Overlay -->
+<div class="absolute inset-0 bg-[#090f15]/85 backdrop-blur-sm opacity-0 transition-opacity duration-300" id="drawer-backdrop"></div>
+<!-- JRPG Modal Dialogue Frame -->
+<div class="absolute bottom-0 left-0 right-0 max-w-md mx-auto bg-[#141922] border-t-4 border-x-2 border-[#d4af37] shadow-[0_-8px_30px_rgba(0,0,0,0.9),inset_0_2px_0_#ffe088] transform translate-y-full transition-transform duration-300 ease-out p-4 pointer-events-auto space-y-3.5 max-h-[85vh] overflow-y-auto custom-scroll" id="drawer-panel">
+<!-- Modal Header -->
+<div class="flex justify-between items-center pb-2 border-b-2 border-[#3a4454]">
+<div class="flex items-center space-x-2">
+<span class="w-3 h-3 bg-[#f2ca50] border border-[#ffe088]"></span>
+<h3 class="font-silkscreen text-xs text-primary font-bold tracking-wider">COMMISSION NEW QUEST</h3>
+</div>
+<button class="w-6 h-6 bg-[#090f15] border border-[#5a6578] text-[#d0c5af] hover:text-white flex items-center justify-center text-xs font-pixel" id="close-drawer-btn">
+          X
+        </button>
+</div>
+<!-- Quest Inscription Title -->
+<div class="space-y-1">
+<label class="font-silkscreen text-[9px] text-[#ffeaa7] tracking-wider">QUEST INSCRIPTION (TITLE)</label>
+<input class="w-full bg-[#090f15] border-2 border-[#3a4454] focus:border-[#f2ca50] px-2.5 py-2 text-xs text-on-surface font-silkscreen placeholder:text-[#5a6578] focus:outline-none" placeholder="e.g. Defeat React State Dragon" type="text"/>
+</div>
+<!-- Quest Directives -->
+<div class="space-y-1">
+<label class="font-silkscreen text-[9px] text-[#ffeaa7] tracking-wider">QUEST DIRECTIVES (DETAILS)</label>
+<textarea class="w-full bg-[#090f15] border-2 border-[#3a4454] focus:border-[#f2ca50] px-2.5 py-1.5 text-xs text-on-surface font-body-md placeholder:text-[#5a6578] focus:outline-none resize-none" placeholder="Record combat directives or prerequisites..." rows="2"></textarea>
+</div>
+<!-- Timers Grid -->
+<div class="grid grid-cols-2 gap-2">
+<div class="space-y-1">
+<label class="font-silkscreen text-[8px] text-[#8fa2b8]">COMMENCEMENT</label>
+<input class="w-full bg-[#090f15] border border-[#3a4454] px-2 py-1 text-[10px] text-[#dee2ec] font-silkscreen focus:outline-none" type="text" value="08:00 AM"/>
+</div>
+<div class="space-y-1">
+<label class="font-silkscreen text-[8px] text-[#8fa2b8]">DEADLINE</label>
+<input class="w-full bg-[#090f15] border border-[#3a4454] px-2 py-1 text-[10px] text-[#dee2ec] font-silkscreen focus:outline-none" type="text" value="11:59 PM"/>
+</div>
+</div>
+<!-- Difficulty Tier Picker -->
+<div class="space-y-1">
+<label class="font-silkscreen text-[9px] text-[#ffeaa7]">LOOT &amp; DIFFICULTY TIER</label>
+<div class="grid grid-cols-4 gap-1.5 font-silkscreen text-[8px]">
+<button class="py-1.5 bg-[#090f15] border border-[#3a4454] text-[#dee2ec] hover:border-white" type="button">COMMON</button>
+<button class="py-1.5 bg-[#00f1fd]/15 border border-[#00f1fd] text-[#00f1fd] font-bold" type="button">RARE</button>
+<button class="py-1.5 bg-[#090f15] border border-[#3a4454] text-[#ffbebd] hover:border-[#ff9596]" type="button">EPIC</button>
+<button class="py-1.5 bg-[#f2ca50]/15 border border-[#f2ca50] text-[#ffeaa7] font-bold" type="button">MYTHIC</button>
+</div>
+</div>
+<!-- 16-Bit Monster Sprite Selector -->
+<div class="space-y-1.5">
+<label class="font-silkscreen text-[9px] text-[#ffeaa7]">SELECT NEMESIS SPRITE</label>
+<div class="grid grid-cols-4 gap-2 font-silkscreen text-[8px]">
+<div class="p-2 bg-[#090f15] border-2 border-[#f2ca50] flex flex-col items-center justify-center cursor-pointer shadow-[2px_2px_0_#000]">
+<span class="material-symbols-outlined text-primary text-xl" style="font-variation-settings: 'FILL' 1;">pest_control</span>
+<span class="mt-1 text-primary">GOBLIN</span>
+</div>
+<div class="p-2 bg-[#090f15] border border-[#3a4454] opacity-70 hover:opacity-100 flex flex-col items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined text-[#ff4757] text-xl" style="font-variation-settings: 'FILL' 1;">skull</span>
+<span class="mt-1 text-[#ffbebd]">SKELETON</span>
+</div>
+<div class="p-2 bg-[#090f15] border border-[#3a4454] opacity-70 hover:opacity-100 flex flex-col items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined text-[#00f1fd] text-xl" style="font-variation-settings: 'FILL' 1;">water_drop</span>
+<span class="mt-1 text-[#6ff6ff]">SLIME</span>
+</div>
+<div class="p-2 bg-[#090f15] border border-[#3a4454] opacity-70 hover:opacity-100 flex flex-col items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined text-[#ffbebd] text-xl" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+<span class="mt-1 text-[#ffbebd]">DRAGON</span>
+</div>
+</div>
+</div>
+<!-- Post Bounty CTA -->
+<button class="w-full py-2.5 mt-1 rpg-btn-gold text-[#241a00] font-silkscreen text-xs font-bold tracking-wider" id="post-quest-btn">
+          POST BOUNTY TO GUILD BOARD
+        </button>
+</div>
+</div>
+<!-- Floating 16-Bit Pixel Crystal Emblem -->
+<div class="fixed bottom-12 left-1/2 -translate-x-1/2 z-50 pointer-events-auto">
+<button class="relative w-14 h-14 bg-[#090f15] border-2 border-[#f2ca50] shadow-[0_0_0_2px_#000,0_0_12px_rgba(0,241,253,0.5)] flex items-center justify-center pixel-crystal-glow active:scale-90 transition-transform">
+<img alt="Ascendia Arcane 16-Bit Crystal Emblem" class="w-10 h-10 object-contain pixelated" src="https://lh3.googleusercontent.com/aida/ALJJyrCnfIaKz21QXxKLWL_a0-CkhV6LqGLWfYUdbWBhImT1H0eNm2IaJqNUHltBuKXagfjPyvCvjbXkIb2-PJX6sWfUiIUfFd-HqmWLbqMIvZns_jBgfSY6-d_zwRV3tsmZ6SHU9DN8u4HJ1uoMr5E3NFZwzpU_uf5yHbsXrvJ1Xjn1fhvBJb0Q-SacEQqOOynf9XYmaShYA02ANJjc3atxofeacg9Yo5-xOAyZTUujHXgx"/>
+</button>
+</div>
+<!-- Bottom Navigation Bar (Retro 16-Bit Menu Bar) -->
+<nav class="fixed bottom-0 left-0 w-full z-40 flex justify-around items-center px-1 py-1 max-w-md mx-auto bg-[#121720] border-t-2 border-[#5a4a28] shadow-[0_-4px_10px_rgba(0,0,0,0.8)]">
+<!-- Quests (Active Item) -->
+<a class="flex flex-col items-center justify-center text-primary font-bold w-16 py-1 active:scale-95 border-b-2 border-primary" href="#">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">swords</span>
+<span class="font-silkscreen text-[8px] mt-0.5">QUESTS</span>
+</a>
+<!-- Shop -->
+<a class="flex flex-col items-center justify-center text-[#8fa2b8] hover:text-[#ffe088] transition-colors w-16 py-1 active:scale-95" href="#">
+<span class="material-symbols-outlined text-xl">storefront</span>
+<span class="font-silkscreen text-[8px] mt-0.5">SHOP</span>
+</a>
+<!-- Spacer for Pixel Crystal -->
+<div class="w-12 h-6 pointer-events-none"></div>
+<!-- Guild -->
+<a class="flex flex-col items-center justify-center text-[#8fa2b8] hover:text-[#ffe088] transition-colors w-16 py-1 active:scale-95" href="#">
+<span class="material-symbols-outlined text-xl">shield</span>
+<span class="font-silkscreen text-[8px] mt-0.5">GUILD</span>
+</a>
+<!-- Hero -->
+<a class="flex flex-col items-center justify-center text-[#8fa2b8] hover:text-[#ffe088] transition-colors w-16 py-1 active:scale-95" href="#">
+<span class="material-symbols-outlined text-xl">person</span>
+<span class="font-silkscreen text-[8px] mt-0.5">HERO</span>
+</a>
+</nav>
+</div>
+<!-- Interactive Modal Scripts -->
+<script>
+    const openBtn = document.getElementById('open-drawer-btn');
+    const closeBtn = document.getElementById('close-drawer-btn');
+    const drawer = document.getElementById('quest-drawer');
+    const backdrop = document.getElementById('drawer-backdrop');
+    const panel = document.getElementById('drawer-panel');
+    const postBtn = document.getElementById('post-quest-btn');
+
+    function toggleDrawer(open) {
+      if (open) {
+        drawer.classList.remove('pointer-events-none');
+        backdrop.classList.add('opacity-100');
+        backdrop.classList.remove('opacity-0');
+        panel.classList.remove('translate-y-full');
+      } else {
+        backdrop.classList.remove('opacity-100');
+        backdrop.classList.add('opacity-0');
+        panel.classList.add('translate-y-full');
+        setTimeout(() => {
+          drawer.classList.add('pointer-events-none');
+        }, 300);
+      }
+    }
+
+    openBtn.addEventListener('click', () => toggleDrawer(true));
+    closeBtn.addEventListener('click', () => toggleDrawer(false));
+    backdrop.addEventListener('click', () => toggleDrawer(false));
+    postBtn.addEventListener('click', () => toggleDrawer(false));
+  </script>
+</body></html>
