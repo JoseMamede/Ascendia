@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ascendia - Perfil do Herói (hero.html)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Press Start 2P & VT323 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'retro-dark': '#0b0e14',
+            'retro-surface': '#121720',
+            'retro-panel': '#18202c',
+            'retro-gold': '#f2ca50',
+            'retro-gold-dark': '#8a6a1c',
+            'retro-border': '#5a4a28',
+            'retro-cyan': '#00e1d9',
+            'retro-cyan-dark': '#0077b6',
+            'retro-red': '#e63946',
+            'retro-green': '#2ec4b6',
+            'retro-purple': '#9d4edd',
+          },
+          fontFamily: {
+            pixel: ['"Press Start 2P"', 'monospace'],
+            retro: ['"VT323"', 'monospace']
+          },
+          boxShadow: {
+            'pixel-box': 'inset -3px -3px 0px 0px #090c10, inset 3px 3px 0px 0px #3a4a5e, 0 4px 0 #000',
+            'pixel-gold': 'inset -3px -3px 0px 0px #8a6a1c, inset 3px 3px 0px 0px #ffeaa7, 0 4px 0 #000',
+            'pixel-btn': 'inset -2px -2px 0px 0px #5a4a28, inset 2px 2px 0px 0px #ffeaa7',
+            'pixel-btn-active': 'inset 2px 2px 0px 0px #3a2e10, inset -1px -1px 0px 0px #ffeaa7'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .font-silkscreen {
+      font-family: 'Silkscreen', monospace;
+    }
+    /* Crisp pixel rendering */
+    * {
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
+    }
+    .pixel-corners {
+      clip-path: polygon(
+        0 4px, 4px 4px, 4px 0,
+        calc(100% - 4px) 0, calc(100% - 4px) 4px, 100% 4px,
+        100% calc(100% - 4px), calc(100% - 4px) calc(100% - 4px), calc(100% - 4px) 100%,
+        4px 100%, 4px calc(100% - 4px), 0 calc(100% - 4px)
+      );
+    }
+    .pixel-border-gold {
+      border: 3px solid #5a4a28;
+      box-shadow: 0 0 0 1px #121720, inset 0 0 0 2px #f2ca50;
+    }
+    .pixel-border-panel {
+      border: 3px solid #2e3846;
+      box-shadow: 0 0 0 1px #090c10, inset 0 0 0 2px #18202c;
+    }
+    .pixel-meter-segment {
+      background-size: 8px 100%;
+      background-image: linear-gradient(to right, rgba(0,0,0,0.45) 2px, transparent 2px);
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    @keyframes pixelPulseGlow {
+      0%, 100% { filter: drop-shadow(0 0 6px rgba(0, 241, 253, 0.7)); }
+      50% { filter: drop-shadow(0 0 14px rgba(0, 241, 253, 0.9)); }
+    }
+    .pixel-crystal-glow {
+      animation: pixelPulseGlow 2.5s steps(6, end) infinite;
+    }
+    /* Floating animated pulse for portal button */
+    @keyframes portalGlow {
+      0%, 100% { transform: scale(1) translateY(0); filter: drop-shadow(0 0 8px rgba(0, 225, 217, 0.6)); }
+      50% { transform: scale(1.05) translateY(-2px); filter: drop-shadow(0 0 14px rgba(242, 202, 80, 0.9)); }
+    }
+    .animate-portal {
+      animation: portalGlow 3s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="bg-retro-dark text-slate-200 font-pixel min-h-screen flex flex-col justify-between selection:bg-retro-gold selection:text-black">
+  <!-- Mobile Container (max-w-md mx-auto) -->
+  <div class="w-full max-w-md mx-auto bg-[#0b0e14] min-h-screen flex flex-col relative pb-28 border-x border-[#1e2633] shadow-2xl">
+    
+    <!-- 1. TOP BAR: Brand & Currencies -->
+    <header class="sticky top-0 z-30 bg-[#0d1219] border-b-2 border-retro-border px-3 py-2.5 flex items-center justify-between">
+      <!-- Brand Logo / Title -->
+      <a href="dashboard.html" class="flex items-center gap-2 group transition-transform active:scale-95">
+        <div class="w-6 h-6 border-2 border-retro-gold bg-retro-surface flex items-center justify-center p-0.5 shadow-sm">
+          <img src="../static/img/logo_ascendia.png" alt="Ascendia Logo" class="w-full h-full object-contain">
+        </div>
+        <span class="text-xs text-retro-gold font-bold tracking-widest group-hover:text-yellow-300">ASCENDIA</span>
+      </a>
+
+      <!-- Currency Counters -->
+      <div class="flex items-center gap-2 text-[10px]">
+        <!-- Gold Coins -->
+        <div class="flex items-center gap-1.5 bg-[#141a24] border border-retro-border px-2 py-1 rounded shadow-inner">
+          <div class="w-3.5 h-3.5 rounded-full bg-yellow-500 border border-yellow-200 flex items-center justify-center font-bold text-[8px] text-black">
+            G
+          </div>
+          <span class="text-retro-gold font-bold tracking-wider">1.450 G</span>
+        </div>
+
+        <!-- Astral Gems -->
+        <div class="flex items-center gap-1.5 bg-[#141a24] border border-[#1b4353] px-2 py-1 rounded shadow-inner">
+          <span class="text-retro-cyan text-xs">◆</span>
+          <span class="text-retro-cyan font-bold tracking-wider">42 GEMAS</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN SCROLLABLE CONTENT -->
+    <main class="flex-1 px-3 pt-3 space-y-4">
+
+      <!-- 2. HERO CHARACTER SHEET CARD -->
+      <section class="bg-retro-surface pixel-corners pixel-border-gold p-3.5 relative overflow-hidden shadow-lg">
+        <!-- Corner Accent Studs -->
+        <div class="absolute top-1 left-1 w-1.5 h-1.5 bg-retro-gold"></div>
+        <div class="absolute top-1 right-1 w-1.5 h-1.5 bg-retro-gold"></div>
+        <div class="absolute bottom-1 left-1 w-1.5 h-1.5 bg-retro-gold"></div>
+        <div class="absolute bottom-1 right-1 w-1.5 h-1.5 bg-retro-gold"></div>
+
+        <!-- Header Ribbon / Status -->
+        <div class="flex items-center justify-between border-b border-[#323d4e] pb-2 mb-3">
+          <span class="text-[9px] text-[#8e9aaf] uppercase tracking-wider">FICHA DO CAMPEÃO</span>
+          <span class="text-[8px] px-1.5 py-0.5 bg-[#2a2414] text-retro-gold border border-retro-gold font-bold">STATUS: ATIVO</span>
+        </div>
+
+        <div class="flex gap-3.5 items-start">
+          <!-- Avatar Frame with Level Badge -->
+          <div class="relative shrink-0">
+            <div class="w-20 h-20 border-2 border-retro-gold bg-[#0b0e14] p-1 shadow-pixel-box overflow-hidden">
+              <img id="hero-avatar" 
+                   src="https://lh3.googleusercontent.com/aida/ALJJyrDm6DokmiSm4xNAuHGuYG3fgRmn5efj1Zag05RHfbXjDcfZzPTBW8wh2Ee42gK4txtuYsQaP8CVmFgW-Up1FWiCVhjT1OLUMmCxgDjmNp_Oe8n57a9Envn-hyhlZMBNMKSrMzphhaUJ3xx8OTXkUS74kEBCm47kegpgTRPeWYIFpiUjB0zqvKnzOeEvMJcwXhIO65PvSMl0QgYDlEmKXcuxaByiyRCfdEZI9fX9MSg" 
+                   alt="Herói" 
+                   class="w-full h-full object-cover">
+            </div>
+            <!-- Level Badge -->
+            <div class="absolute -bottom-2 -right-1 bg-retro-gold text-black text-[8px] font-bold px-1.5 py-0.5 border border-black shadow">
+              NÍV. 14
+            </div>
+          </div>
+
+          <!-- Hero Name, Class & Bars -->
+          <div class="flex-1 min-w-0">
+            <h1 id="hero-name" class="text-xs text-white font-bold tracking-wider truncate mb-0.5">
+              HERÓI VALERIE
+            </h1>
+            <div class="flex items-center gap-1.5 mb-2.5">
+              <span class="text-[8px] text-yellow-400 font-bold">❖</span>
+              <p id="hero-class" class="text-[9px] text-[#f2ca50] tracking-wide truncate">
+                BASTIÃO DE FERRO
+              </p>
+            </div>
+
+            <!-- Health Points (PV) Bar -->
+            <div class="mb-2">
+              <div class="flex justify-between items-center text-[8px] mb-1">
+                <span class="text-retro-red font-bold flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 bg-retro-red inline-block"></span> PV
+                </span>
+                <span class="text-slate-300 font-retro text-xs tracking-wider">420 / 450 PV</span>
+              </div>
+              <div class="w-full h-2.5 bg-[#090c10] border border-[#441a1d] p-0.5 relative overflow-hidden">
+                <div class="h-full bg-gradient-to-r from-red-600 via-rose-500 to-red-400 pixel-meter-segment transition-all duration-500" style="width: 93.3%;"></div>
+              </div>
+            </div>
+
+            <!-- Experience Points (XP) Bar -->
+            <div>
+              <div class="flex justify-between items-center text-[8px] mb-1">
+                <span class="text-retro-cyan font-bold flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 bg-retro-cyan inline-block"></span> XP
+                </span>
+                <span class="text-slate-300 font-retro text-xs tracking-wider">1.850 / 2.400 XP</span>
+              </div>
+              <div class="w-full h-2.5 bg-[#090c10] border border-[#0d3446] p-0.5 relative overflow-hidden">
+                <div class="h-full bg-gradient-to-r from-cyan-600 via-teal-400 to-cyan-300 pixel-meter-segment transition-all duration-500" style="width: 77%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Switch Class / Edit Hero CTA Button -->
+        <div class="mt-3.5 pt-2.5 border-t border-[#232c3a] flex justify-end">
+          <a href="create_hero.html" 
+             class="inline-flex items-center gap-1.5 text-[8px] text-retro-gold hover:text-white bg-[#1e2634] hover:bg-[#2b3547] border border-retro-border hover:border-retro-gold px-2.5 py-1.5 transition-colors shadow-pixel-btn active:shadow-pixel-btn-active">
+            <span>⚙</span>
+            <span>TROCAR CLASSE / EDITAR HERÓI</span>
+            <span>»</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- 3. PRODUCTIVITY & COMBAT STATS GRID (2x2 Cards) -->
+      <section>
+        <div class="flex items-center gap-2 mb-2 px-1">
+          <span class="text-retro-gold text-[10px]">■</span>
+          <h2 class="text-[10px] text-white font-bold tracking-wider">ESTATÍSTICAS & COMBATE</h2>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2.5">
+          <!-- Card 1: Missões Concluídas -->
+          <div class="bg-retro-panel border-2 border-[#2b3647] p-2.5 relative group hover:border-retro-gold transition-colors">
+            <div class="text-[8px] text-[#8e9aaf] font-bold uppercase mb-1 leading-tight">
+              MISSÕES CONCLUÍDAS
+            </div>
+            <div class="flex items-baseline justify-between mt-1">
+              <span class="text-base text-retro-gold font-bold">128</span>
+              <span class="text-[8px] text-emerald-400 font-retro text-xs">▲ TOTAL</span>
+            </div>
+            <div class="w-full bg-[#0d1219] h-1 mt-1.5 overflow-hidden">
+              <div class="bg-retro-gold h-full w-[80%]"></div>
+            </div>
+          </div>
+
+          <!-- Card 2: Sequência Atual -->
+          <div class="bg-retro-panel border-2 border-[#2b3647] p-2.5 relative group hover:border-orange-500 transition-colors">
+            <div class="text-[8px] text-[#8e9aaf] font-bold uppercase mb-1 leading-tight">
+              SEQUÊNCIA ATUAL
+            </div>
+            <div class="flex items-center justify-between mt-1">
+              <span class="text-sm text-orange-400 font-bold tracking-tight">14 DIAS</span>
+              <span class="text-sm animate-pulse" title="Em Chamas!">🔥</span>
+            </div>
+            <div class="w-full bg-[#0d1219] h-1 mt-1.5 overflow-hidden">
+              <div class="bg-orange-500 h-full w-[95%]"></div>
+            </div>
+          </div>
+
+          <!-- Card 3: Dano Total em Raids -->
+          <div class="bg-retro-panel border-2 border-[#2b3647] p-2.5 relative group hover:border-retro-red transition-colors">
+            <div class="text-[8px] text-[#8e9aaf] font-bold uppercase mb-1 leading-tight">
+              DANO TOTAL EM RAIDS
+            </div>
+            <div class="flex items-baseline justify-between mt-1">
+              <span class="text-sm text-retro-red font-bold">8.450</span>
+              <span class="text-[8px] text-retro-red font-bold">DMG</span>
+            </div>
+            <div class="w-full bg-[#0d1219] h-1 mt-1.5 overflow-hidden">
+              <div class="bg-retro-red h-full w-[70%]"></div>
+            </div>
+          </div>
+
+          <!-- Card 4: Taxa de Disciplina -->
+          <div class="bg-retro-panel border-2 border-[#2b3647] p-2.5 relative group hover:border-retro-cyan transition-colors">
+            <div class="text-[8px] text-[#8e9aaf] font-bold uppercase mb-1 leading-tight">
+              TAXA DE DISCIPLINA
+            </div>
+            <div class="flex items-baseline justify-between mt-1">
+              <span class="text-base text-retro-cyan font-bold">94%</span>
+              <span class="text-[8px] text-retro-cyan font-retro text-xs">0 BLOQUEIOS</span>
+            </div>
+            <div class="w-full bg-[#0d1219] h-1 mt-1.5 overflow-hidden">
+              <div class="bg-retro-cyan h-full w-[94%]"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. EQUIPMENT & ACTIVE RELICS SECTION -->
+      <section class="bg-retro-surface border-2 border-retro-border p-3 relative shadow-md">
+        <div class="flex items-center justify-between border-b border-[#2d394b] pb-2 mb-2.5">
+          <div class="flex items-center gap-1.5">
+            <span class="text-retro-gold text-[10px]">⚔</span>
+            <h2 class="text-[9px] text-white font-bold tracking-wider">EQUIPAMENTO & RELÍQUIAS ATIVAS</h2>
+          </div>
+          <a href="shop.html" class="text-[8px] text-retro-gold hover:underline flex items-center gap-0.5">
+            BAZAAR »
+          </a>
+        </div>
+
+        <div class="space-y-2">
+          <!-- Slot 1 (Armadura): Armadura de Aço Negro (+15% Vigor) -->
+          <div class="flex items-center gap-2.5 bg-[#151c27] border border-[#2d3a4d] p-2 hover:border-purple-400 transition-colors">
+            <div class="w-10 h-10 border-2 border-purple-500 bg-[#0c1017] p-0.5 shrink-0 flex items-center justify-center">
+              <img src="../static/img/armadura.jpg" alt="Armadura" class="w-full h-full object-cover pixelated">
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between">
+                <span class="text-[7px] text-purple-400 font-bold uppercase tracking-wider">ARMADURA (MÍTICO)</span>
+                <span class="text-[7px] bg-purple-950 text-purple-200 px-1 border border-purple-500">EQUIPADO</span>
+              </div>
+              <h3 class="text-[9px] text-slate-100 font-bold truncate mt-0.5">Armadura de Aço Negro</h3>
+              <p class="text-[8px] text-emerald-400 font-retro text-xs mt-0.5 tracking-wide">+15% Vigor em missões matinais</p>
+            </div>
+          </div>
+
+          <!-- Slot 2 (Relíquia): Égide da Tenacidade (Proteção de Sequência Ativa) -->
+          <div class="flex items-center gap-2.5 bg-[#151c27] border border-[#2d3a4d] p-2 hover:border-retro-cyan transition-colors">
+            <div class="w-10 h-10 border-2 border-retro-cyan bg-[#0c1017] p-1 shrink-0 flex items-center justify-center">
+              <img src="../static/img/egide.jpg" alt="Relíquia" class="w-full h-full object-cover pixelated">
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between">
+                <span class="text-[7px] text-retro-cyan font-bold uppercase tracking-wider">RELÍQUIA (ÉPICO)</span>
+                <span class="text-[7px] bg-cyan-950 text-retro-cyan px-1 border border-retro-cyan">ATIVO</span>
+              </div>
+              <h3 class="text-[9px] text-slate-100 font-bold truncate mt-0.5">Égide da Tenacidade</h3>
+              <p class="text-[8px] text-retro-cyan font-retro text-xs mt-0.5 tracking-wide">Proteção de Sequência Ativa (Sem penalidade de PV)</p>
+            </div>
+          </div>
+
+          <!-- Slot 3 (Companheiro): Draco Flamejante (+45 Dano em Raids) -->
+          <div class="flex items-center gap-2.5 bg-[#151c27] border border-[#2d3a4d] p-2 hover:border-red-400 transition-colors">
+            <div class="w-10 h-10 border-2 border-red-500 bg-[#0c1017] p-0.5 shrink-0 flex items-center justify-center">
+              <img src="../static/img/draco.jpg" alt="Companheiro" class="w-full h-full object-cover pixelated">
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between">
+                <span class="text-[7px] text-red-400 font-bold uppercase tracking-wider">COMPANHEIRO (LENDÁRIO)</span>
+                <span class="text-[7px] bg-red-950 text-red-300 px-1 border border-red-500">PET VINCULADO</span>
+              </div>
+              <h3 class="text-[9px] text-slate-100 font-bold truncate mt-0.5">Draco Flamejante</h3>
+              <p class="text-[8px] text-red-400 font-retro text-xs mt-0.5 tracking-wide">+45 Dano bônus em Raids contra Ignis</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. COMPLETED QUESTS HISTORY (Crônicas de Vitória) -->
+      <section class="bg-retro-panel border-2 border-[#263140] p-3 shadow-md">
+        <div class="flex items-center justify-between border-b border-[#303d4e] pb-2 mb-2.5">
+          <div class="flex items-center gap-1.5">
+            <span class="text-retro-gold text-[10px]">📜</span>
+            <h2 class="text-[9px] text-white font-bold tracking-wider">ÚLTIMAS MISSÕES CONCLUÍDAS</h2>
+          </div>
+          <span class="text-[8px] text-[#718096] font-retro text-xs">CRÔNICAS DE VITÓRIA</span>
+        </div>
+
+        <div class="space-y-2 font-retro text-sm">
+          <!-- Quest 1 -->
+          <div class="bg-[#10151d] border-l-4 border-retro-gold p-2 flex flex-col gap-0.5">
+            <div class="flex items-center justify-between text-[11px] font-pixel text-slate-200">
+              <span class="truncate">Estudar Algoritmos (2h)</span>
+              <span class="text-emerald-400 text-xs shrink-0 font-retro">✓ CONCLUÍDO</span>
+            </div>
+            <div class="flex items-center justify-between text-[#8e9aaf] text-xs pt-1 border-t border-[#1b2330]">
+              <span class="text-[10px]">Hoje, 14:45</span>
+              <span class="text-retro-gold font-bold text-xs tracking-wider">+120 XP | +45 G</span>
+            </div>
+          </div>
+
+          <!-- Quest 2 -->
+          <div class="bg-[#10151d] border-l-4 border-retro-red p-2 flex flex-col gap-0.5">
+            <div class="flex items-center justify-between text-[11px] font-pixel text-slate-200">
+              <span class="truncate">Treino de Força (45m)</span>
+              <span class="text-emerald-400 text-xs shrink-0 font-retro">✓ CONCLUÍDO</span>
+            </div>
+            <div class="flex items-center justify-between text-[#8e9aaf] text-xs pt-1 border-t border-[#1b2330]">
+              <span class="text-[10px]">Hoje, 10:15</span>
+              <span class="text-retro-gold font-bold text-xs tracking-wider">+90 XP | +30 G</span>
+            </div>
+          </div>
+
+          <!-- Quest 3 -->
+          <div class="bg-[#10151d] border-l-4 border-retro-cyan p-2 flex flex-col gap-0.5">
+            <div class="flex items-center justify-between text-[11px] font-pixel text-slate-200">
+              <span class="truncate">Leitura Técnica de Arquitetura</span>
+              <span class="text-emerald-400 text-xs shrink-0 font-retro">✓ CONCLUÍDO</span>
+            </div>
+            <div class="flex items-center justify-between text-[#8e9aaf] text-xs pt-1 border-t border-[#1b2330]">
+              <span class="text-[10px]">Ontem, 21:30</span>
+              <span class="text-retro-gold font-bold text-xs tracking-wider">+60 XP | +20 G</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Floating 16-Bit Pixel Crystal Emblem -->
+    <div class="fixed bottom-4 left-1/2 -translate-x-1/2 z-[60] pointer-events-auto">
+      <a href="dashboard.html" aria-label="Portal - Painel" class="relative w-14 h-14 bg-[#121720] border-2 border-[#f2ca50] shadow-[0_0_0_2px_#000,0_0_12px_rgba(0,241,253,0.5)] flex items-center justify-center pixel-crystal-glow active:scale-90 transition-transform">
+        <img src="../static/img/logo_ascendia.png" class="w-full h-full object-contain [image-rendering:pixelated]" alt="ASC">
+      </a>
+    </div>
+    <!-- Bottom Navigation Bar (Retro 16-Bit Menu Bar) -->
+    <nav class="fixed bottom-0 left-0 right-0 w-full z-50 flex justify-around items-center px-1 py-1 max-w-md mx-auto bg-[#121720] border-t-2 border-[#5a4a28] shadow-[0_-4px_10px_rgba(0,0,0,0.8)]">
+      <a class="flex flex-col items-center justify-center text-[#8fa2b8] hover:text-[#ffe088] transition-colors w-16 py-1 active:scale-95" href="dashboard.html">
+        <span class="material-symbols-outlined text-xl">swords</span>
+        <span class="font-silkscreen text-[8px] mt-0.5">MISSÕES</span>
+      </a>
+      <a class="flex flex-col items-center justify-center text-[#8fa2b8] hover:text-[#ffe088] transition-colors w-16 py-1 active:scale-95" href="shop.html">
+        <span class="material-symbols-outlined text-xl">storefront</span>
+        <span class="font-silkscreen text-[8px] mt-0.5">LOJA</span>
+      </a>
+      <div class="w-12 h-6 pointer-events-none"></div>
+      <a class="flex flex-col items-center justify-center text-[#8fa2b8] hover:text-[#ffeaa7] transition-colors w-16 py-1 active:scale-95" href="guild.html">
+        <span class="material-symbols-outlined text-xl">shield</span>
+        <span class="font-silkscreen text-[8px] mt-0.5">GUILDA</span>
+      </a>
+      <a class="flex flex-col items-center justify-center text-retro-gold font-bold w-16 py-1 active:scale-95 border-b-2 border-retro-gold" href="hero.html">
+        <span class="material-symbols-outlined text-xl">person</span>
+        <span class="font-silkscreen text-[8px] mt-0.5">HERÓI</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <!-- Dynamic LocalStorage Synchronizer -->
+  <script>
+    (function initHeroProfile() {
+      // Sync Hero Name
+      const storedName = localStorage.getItem('ascendia_hero_name');
+      if (storedName && storedName.trim()) {
+        const nameEl = document.getElementById('hero-name');
+        if (nameEl) nameEl.textContent = storedName.toUpperCase();
+      }
+
+      // Sync Hero Class
+      const storedClass = localStorage.getItem('ascendia_hero_class');
+      if (storedClass && storedClass.trim()) {
+        const classEl = document.getElementById('hero-class');
+        if (classEl) classEl.textContent = storedClass.toUpperCase();
+      }
+
+      // Sync Hero Avatar (defaults to Paladin portrait https://lh3.googleusercontent.com/aida/ALJJyrDm6DokmiSm4xNAuHGuYG3fgRmn5efj1Zag05RHfbXjDcfZzPTBW8wh2Ee42gK4txtuYsQaP8CVmFgW-Up1FWiCVhjT1OLUMmCxgDjmNp_Oe8n57a9Envn-hyhlZMBNMKSrMzphhaUJ3xx8OTXkUS74kEBCm47kegpgTRPeWYIFpiUjB0zqvKnzOeEvMJcwXhIO65PvSMl0QgYDlEmKXcuxaByiyRCfdEZI9fX9MSg or custom path)
+      const storedAvatar = localStorage.getItem('ascendia_hero_avatar') || localStorage.getItem('ascendia_equipped_avatar');
+      if (storedAvatar && storedAvatar.trim()) {
+        const avatarEl = document.getElementById('hero-avatar');
+        if (avatarEl) {
+          avatarEl.src = storedAvatar;
+        }
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -180,7 +180,7 @@
 <!-- Hero Pixel Portrait with Stepped Gold Border -->
 <div class="relative shrink-0">
 <div class="w-16 h-16 p-0.5 bg-[#d4af37] border-2 border-[#090f15] shadow-[0_0_0_2px_#ffe088] pixelated bg-[#18202c]">
-<img alt="Retrato pixel art do herói Valerie" class="w-full h-full object-cover pixelated" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXPwC1y1JyCRStRUOzvWCu4VR2Ictig-PSjWEk2hzD9UfmqLkgVOLTvMogPj8komCHRuqwYfa05nbG2UUlLtNB9iTFVOa-YpaPTdSQyI4G1xSmQIj0TSqh7jHkAy6Szgg2EfRw9_5scXJSxfOdR8elbb0VL0xU9ISbqowD7thonDWe6Q-hiMNLn31egziRNuptEKG_ekYDW9Ee2ArHVwlXgBnOxZJLMGkwF9XSSAo"/>
+<img alt="Retrato pixel art do herói Valerie" class="w-full h-full object-cover pixelated" id="hero-avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXPwC1y1JyCRStRUOzvWCu4VR2Ictig-PSjWEk2hzD9UfmqLkgVOLTvMogPj8komCHRuqwYfa05nbG2UUlLtNB9iTFVOa-YpaPTdSQyI4G1xSmQIj0TSqh7jHkAy6Szgg2EfRw9_5scXJSxfOdR8elbb0VL0xU9ISbqowD7thonDWe6Q-hiMNLn31egziRNuptEKG_ekYDW9Ee2ArHVwlXgBnOxZJLMGkwF9XSSAo"/>
 </div>
 <div class="absolute -bottom-2 -right-1 px-1.5 py-0.5 bg-[#ffe088] text-[#241a00] font-silkscreen text-[9px] font-bold border-2 border-[#241a00] shadow-[1px_1px_0_#000]">
             NÍV. 14
@@ -189,8 +189,8 @@
 <!-- Hero Vitals HUD & Segmented 16-Bit Meters -->
 <div class="flex-1 min-w-0">
 <div class="flex items-baseline justify-between mb-1.5">
-<h1 class="font-silkscreen text-sm text-primary font-bold tracking-wide drop-shadow-[1px_1px_0_#000] truncate">HERÓI VALERIE</h1>
-<span class="font-silkscreen text-[9px] text-[#8fa2b8] tracking-widest uppercase">PALADINO</span>
+<h1 class="font-silkscreen text-sm text-primary font-bold tracking-wide drop-shadow-[1px_1px_0_#000] truncate" id="hero-name">HERÓI VALERIE</h1>
+<span class="font-silkscreen text-[9px] text-[#8fa2b8] tracking-widest uppercase" id="hero-class">PALADINO</span>
 </div>
 <!-- Retro Segmented HP Bar (Ruby Red) -->
 <div class="space-y-1 mb-2">
@@ -223,7 +223,7 @@
 <section class="rpg-box-dark overflow-hidden border-2 border-[#e74c3c] shadow-[0_0_15px_rgba(231,76,60,0.25)] relative">
 <!-- Banner Visual -->
 <div class="relative h-44 w-full bg-black">
-<img alt="Incursão contra Ignis, o Antigo Pyragor" class="w-full h-full object-cover pixelated" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwkvEm8DrcgrnnMyrLNJrbDRHk7mX0W3R0NRpKyY45V8-3-a83KgBIjgULDRNRtoK576dAtHkbXVNhblhsPS2bG4EZ0vdFHQ6Q2nDVrg2IeIlTyNMmlWl1ckA5SKNVkUdYQkJYeDofFXzia2lFg5agbBHui0sC7DXj5HBLhPH90QSNaPM6FYewPEMX4JXwGiTiX2QEeiGyAG7Og9L4pkbFc85FsLRKs5mFnXcQlMU"/>
+<img src="../static/img/Pyrokroth.gif" alt="Pyrokroth" class="w-full h-full object-cover pixelated">
 <div class="absolute inset-0 bg-gradient-to-t from-[#121720] via-transparent to-transparent"></div>
 <!-- Retro Timer Pill -->
 <div class="absolute top-2 right-2 flex items-center space-x-1 px-2 py-1 bg-[#090f15]/90 border border-[#ff4757] shadow-[2px_2px_0_#000]">
@@ -235,7 +235,7 @@
 <div class="flex items-center space-x-1 text-[#ff7979] mb-0.5">
 <span class="font-silkscreen text-[8px] tracking-widest bg-[#680013] px-1 py-0.5 border border-[#ff4757]">CHEFE DE INCURSÃO</span>
 </div>
-<h2 class="font-pixel text-[11px] text-[#ffeaa7] font-bold tracking-wider drop-shadow-[2px_2px_0_#000]">IGNIS, DEVORADOR DE MUNDOS</h2>
+<h2 class="font-pixel text-[11px] text-[#ffeaa7] font-bold tracking-wider drop-shadow-[2px_2px_0_#000]">PYROKROTH, O TITÃ DE SANGUE E LAVA</h2>
 </div>
 </div>
 <!-- Boss HP Meter & Battle Stats Frame -->
@@ -452,7 +452,7 @@
 <!-- Bottom Navigation Bar (Retro 16-Bit Menu Bar) -->
 <nav class="fixed bottom-0 left-0 right-0 w-full z-50 flex justify-around items-center px-1 py-1 max-w-md mx-auto bg-[#121720] border-t-2 border-[#5a4a28] shadow-[0_-4px_10px_rgba(0,0,0,0.8)]">
 <!-- Quests (Active Item) -->
-<a class="flex flex-col items-center justify-center text-primary font-bold w-16 py-1 active:scale-95 border-b-2 border-primary" href="#">
+<a class="flex flex-col items-center justify-center text-primary font-bold w-16 py-1 active:scale-95 border-b-2 border-primary" href="dashboard.html">
 <span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">swords</span>
 <span class="font-silkscreen text-[8px] mt-0.5">MISSÕES</span>
 </a>
@@ -464,12 +464,12 @@
 <!-- Spacer for Pixel Crystal -->
 <div class="w-12 h-6 pointer-events-none"></div>
 <!-- Guild -->
-<a class="flex flex-col items-center justify-center text-[#8fa2b8] hover:text-[#ffe088] transition-colors w-16 py-1 active:scale-95" href="#">
+<a class="flex flex-col items-center justify-center text-[#8fa2b8] hover:text-[#ffe088] transition-colors w-16 py-1 active:scale-95" href="guild.html">
 <span class="material-symbols-outlined text-xl">shield</span>
 <span class="font-silkscreen text-[8px] mt-0.5">GUILDA</span>
 </a>
 <!-- Hero -->
-<a class="flex flex-col items-center justify-center text-[#8fa2b8] hover:text-[#ffe088] transition-colors w-16 py-1 active:scale-95" href="#">
+<a class="flex flex-col items-center justify-center text-[#8fa2b8] hover:text-[#ffe088] transition-colors w-16 py-1 active:scale-95" href="hero.html">
 <span class="material-symbols-outlined text-xl">person</span>
 <span class="font-silkscreen text-[8px] mt-0.5">HERÓI</span>
 </a>
@@ -504,5 +504,22 @@
     closeBtn.addEventListener('click', () => toggleDrawer(false));
     backdrop.addEventListener('click', () => toggleDrawer(false));
     postBtn.addEventListener('click', () => toggleDrawer(false));
+  </script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const heroName = localStorage.getItem('ascendia_hero_name');
+      const heroClass = localStorage.getItem('ascendia_hero_class');
+      const heroAvatar = localStorage.getItem('ascendia_hero_avatar');
+
+      if (heroName) {
+        document.getElementById('hero-name').textContent = `HERÓI ${heroName}`;
+      }
+      if (heroClass) {
+        document.getElementById('hero-class').textContent = heroClass;
+      }
+      if (heroAvatar) {
+        document.getElementById('hero-avatar').src = heroAvatar;
+      }
+    });
   </script>
 </body></html>

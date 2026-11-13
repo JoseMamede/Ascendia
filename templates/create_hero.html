@@ -143,9 +143,9 @@
 <div class="relative flex-1 max-w-[210px] aspect-square mx-auto p-1.5 bg-black/70 border-2 border-retro-goldBorder shadow-inner">
 <div class="w-full h-full relative overflow-hidden border border-retro-goldDark">
 <!-- Iron Bastion Portrait -->
-<img alt="Paladino do Bastião de Ferro" class="w-full h-full object-cover transition-opacity duration-300 block" id="portrait-iron" src="https://lh3.googleusercontent.com/aida/ALJJyrDm6DokmiSm4xNAuHGuYG3fgRmn5efj1Zag05RHfbXjDcfZzPTBW8wh2Ee42gK4txtuYsQaP8CVmFgW-Up1FWiCVhjT1OLUMmCxgDjmNp_Oe8n57a9Envn-hyhlZMBNMKSrMzphhaUJ3xx8OTXkUS74kEBCm47kegpgTRPeWYIFpiUjB0zqvKnzOeEvMJcwXhIO65PvSMl0QgYDlEmKXcuxaByiyRCfdEZI9fX9MSg"/>
+<img alt="Bastião de Ferro" class="w-full h-full object-cover pixelated transition-opacity duration-300 block" id="portrait-iron" src="../static/img/paladin.jpg"/>
 <!-- Arcane Scholar Portrait -->
-<img alt="Retrato pixel art de uma maga Erudita Arcana com vestes celestiais azuis e violetas, portando um cristal rúnico, em moldura dourada" class="w-full h-full object-cover transition-opacity duration-300 hidden" id="portrait-arcane" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiUIuO3GkPySn9FShWrYdiyVpc63rveUeq3wDTCnqvFKLKYeR8q7JmcJvRfFT9tuMy1FPDdo2ki_wqZZmwXw4kQDfwmxsELT2EsgZHxmCM3GTsDH2T7gq9GLOuQDOyDQ0oTOsaQNZFZUAduj3uq6_R6ucQlPQxbkXtpzVCHJHl5J3-oZQ7kV1cJrp6TpKtMfb44hJf2jop3x6M5FBEL-SuRjvVoiYC5BjXyiEWlNY"/>
+<img alt="Erudito Arcano" class="w-full h-full object-cover pixelated transition-opacity duration-300 hidden" id="portrait-arcane" src="../static/img/scholar.jpg"/>
 </div>
 <!-- Class Calling Pill overlay -->
 <div class="absolute bottom-2 left-1/2 -translate-x-1/2 px-2.5 py-0.5 bg-black/90 border border-retro-goldLight text-[8px] tracking-wider text-retro-goldLight whitespace-nowrap shadow-md" id="role-tag">
@@ -228,7 +228,7 @@
 <!-- END: MainContent -->
 <!-- BEGIN: BottomCta -->
 <footer class="w-full pt-2 pb-1">
-<a class="w-full block py-3.5 px-4 text-center font-pixel text-xs tracking-wider uppercase font-bold text-black bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 border-2 border-yellow-200 active:translate-y-1 shadow-[0_4px_0_#443213] hover:brightness-110 active:shadow-none transition-all cursor-pointer" href="dashboard.html" id="submit-cta">
+<a class="w-full block py-3.5 px-4 text-center font-pixel text-xs tracking-wider uppercase font-bold text-black bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 border-2 border-yellow-200 active:translate-y-1 shadow-[0_4px_0_#443213] hover:brightness-110 active:shadow-none transition-all cursor-pointer" href="dashboard.html" id="submit-cta" onclick="forgeHero(event)">
       ⚔ FORJAR HERÓI E ENTRAR NO REINO ⚔
     </a>
 <div class="text-center mt-2.5 text-[8px] text-slate-500 font-vt tracking-widest uppercase">
@@ -243,6 +243,7 @@
     const classData = {
       iron: {
         title: "Bastião de Ferro",
+        avatar: "../static/img/paladin.jpg",
         role: "GUERREIRO / TANQUE & VIGOR",
         lore: '"Perseverança inabalável contra o torpor físico e o esgotamento."',
         stat1Label: "BÔNUS DE PV",
@@ -259,6 +260,7 @@
       },
       arcane: {
         title: "Erudito Arcano",
+        avatar: "../static/img/scholar.jpg",
         role: "MAGO / FOCO & ESTUDO PROFUNDO",
         lore: '"Canalize o fluxo de mana cristalina para manter a concentração profunda."',
         stat1Label: "RESERVA DE MANA",
@@ -331,6 +333,18 @@
 
     function toggleCarousel() {
       selectClass(currentClass === 'iron' ? 'arcane' : 'iron');
+    }
+
+    function forgeHero(event) {
+      event.preventDefault();
+
+      const heroName = document.getElementById('hero-name').value.trim() || 'Herói';
+      const hero = classData[currentClass];
+
+      localStorage.setItem('ascendia_hero_name', heroName);
+      localStorage.setItem('ascendia_hero_class', hero.title);
+      localStorage.setItem('ascendia_hero_avatar', hero.avatar);
+      window.location.href = 'dashboard.html';
     }
   </script>
 <!-- END: LogicScript -->
