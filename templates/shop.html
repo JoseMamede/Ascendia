@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ascendia - Bazar dos Mercadores</title>
+<!-- Google Fonts: Press Start 2P for 16-bit pixel retro RPG look -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;family=VT323&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            retroBg: '#0b0f15',
+            panelBg: '#121720',
+            panelDark: '#090d13',
+            goldBorder: '#5a4a28',
+            goldBright: '#f2ca50',
+            goldDark: '#8a6e26',
+            rubyRed: '#ff3e3e',
+            manaCyan: '#00e1d9',
+            emeraldGreen: '#2ecc71',
+            purpleVoid: '#9b59b6'
+          },
+          fontFamily: {
+            pixel: ['"Press Start 2P"', 'monospace'],
+            vt: ['"VT323"', 'monospace']
+          },
+          boxShadow: {
+            pixel: 'inset 0 0 0 2px #5a4a28, inset 0 0 0 4px #090d13',
+            pixelGold: 'inset 0 0 0 2px #f2ca50, inset 0 0 0 4px #8a6e26',
+            pixelBtn: '0 4px 0 #5a4a28',
+            pixelBtnActive: '0 1px 0 #5a4a28'
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    /* 16-bit Pixel rendering and scanline aesthetic */
+    * {
+      image-rendering: pixelated;
+      image-rendering: crisp-edges;
+    }
+    body {
+      background-color: #080c10;
+      font-family: 'Press Start 2P', monospace;
+    }
+    /* Pixel border helper */
+    .pixel-box {
+      border: 3px solid #5a4a28;
+      box-shadow: 0 0 0 2px #090d13, inset 0 0 0 2px #090d13;
+      position: relative;
+    }
+    .pixel-box-gold {
+      border: 3px solid #f2ca50;
+      box-shadow: 0 0 0 2px #5a4a28, inset 0 0 0 2px #5a4a28;
+      position: relative;
+    }
+    .pixel-corners::before {
+      content: "";
+      position: absolute;
+      top: -3px; left: -3px;
+      width: 4px; height: 4px;
+      background: #f2ca50;
+    }
+    .pixel-corners::after {
+      content: "";
+      position: absolute;
+      bottom: -3px; right: -3px;
+      width: 4px; height: 4px;
+      background: #f2ca50;
+    }
+    /* CRT Scanline effect overlay */
+    .crt-grid::after {
+      content: " ";
+      display: block;
+      position: fixed;
+      top: 0; left: 0; bottom: 0; right: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+      z-index: 99;
+      background-size: 100% 3px, 6px 100%;
+      pointer-events: none;
+      opacity: 0.7;
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #090d13;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #5a4a28;
+      border: 1px solid #f2ca50;
+    }
+    .glow-cyan {
+      box-shadow: 0 0 14px rgba(0, 225, 217, 0.45);
+    }
+    .glow-gold {
+      box-shadow: 0 0 12px rgba(242, 202, 80, 0.4);
+    }
+  </style>
+</head>
+<body class="crt-grid min-h-screen text-slate-200 antialiased flex justify-center pb-28">
+<!-- Mobile Shell Wrapper -->
+<div class="w-full max-w-md bg-[#0d1219] min-h-screen flex flex-col relative px-3 py-3 border-x-2 border-[#1e2634]">
+<!-- 1. TOP HEADER & PLAYER CURRENCY -->
+<header class="w-full mb-3 flex items-center justify-between pb-3 border-b-2 border-dashed border-[#5a4a28]">
+<div class="flex items-center space-x-2">
+<span class="text-xs text-[#f2ca50] tracking-wider font-pixel drop-shadow-[0_2px_0_#000]">ASCENDIA</span>
+</div>
+<!-- Currency Display (Gold & Gems) -->
+<div class="flex items-center space-x-2 text-[10px]">
+<!-- Gold Coins -->
+<div class="flex items-center bg-[#121720] border-2 border-[#5a4a28] px-2 py-1.5 shadow-[inset_0_0_0_1px_#090d13]">
+<!-- Pixel Coin SVG -->
+<svg class="w-3.5 h-3.5 mr-1.5 inline-block text-[#f2ca50]" fill="currentColor" viewbox="0 0 16 16">
+<rect height="1" width="6" x="5" y="2"></rect>
+<rect height="1" width="10" x="3" y="3"></rect>
+<rect height="6" width="12" x="2" y="5"></rect>
+<rect height="1" width="10" x="3" y="11"></rect>
+<rect height="1" width="6" x="5" y="12"></rect>
+<rect fill="#090d13" height="6" width="2" x="7" y="5"></rect>
+</svg>
+<span class="text-[#f2ca50] font-pixel">1,450</span>
+<span class="text-[#a08a47] ml-0.5 font-pixel">G</span>
+</div>
+<!-- Astral Gems / Shards -->
+<div class="flex items-center bg-[#121720] border-2 border-[#164e63] px-2 py-1.5 shadow-[inset_0_0_0_1px_#090d13]">
+<!-- Pixel Gem SVG -->
+<svg class="w-3.5 h-3.5 mr-1.5 inline-block text-[#00e1d9]" fill="currentColor" viewbox="0 0 16 16">
+<rect height="2" width="2" x="7" y="2"></rect>
+<rect height="2" width="6" x="5" y="4"></rect>
+<rect height="3" width="10" x="3" y="6"></rect>
+<rect height="3" width="6" x="5" y="9"></rect>
+<rect height="2" width="2" x="7" y="12"></rect>
+<rect fill="#ffffff" height="4" opacity="0.8" width="2" x="7" y="6"></rect>
+</svg>
+<span class="text-[#00e1d9] font-pixel">42</span>
+</div>
+</div>
+</header>
+<!-- BAZAAR BANNER / SUBTITLE -->
+<div class="pixel-box bg-[#121720] p-3 mb-3 border-2 border-[#5a4a28] flex items-center justify-between">
+<div>
+<div class="text-[9px] text-[#f2ca50] uppercase tracking-wider mb-1 flex items-center">
+<span class="inline-block w-2 h-2 bg-[#f2ca50] mr-1.5"></span>
+          BAZAR DA CIDADELA
+        </div>
+<p class="text-[9px] text-slate-400 font-vt tracking-wide text-xs">"Só os disciplinados podem empunhar relíquias divinas."</p>
+</div>
+<div class="text-[8px] bg-[#1e2738] border border-[#5a4a28] px-2 py-1 text-[#f2ca50] rounded-none">
+        CICLO: 18H
+      </div>
+</div>
+<!-- 2. CATEGORY TABS -->
+<nav class="w-full mb-4">
+<div class="grid grid-cols-4 gap-1 text-[8px]">
+<!-- Active Tab: Class Skins -->
+<button class="bg-[#f2ca50] text-[#090d13] font-bold py-2 px-1 text-center border-b-2 border-r-2 border-[#8a6e26] border-t-2 border-l-2 border-[#ffeaa7] shadow-sm transition-transform active:translate-y-0.5">
+          VISUAIS
+        </button>
+<!-- Tab: Companions -->
+<button class="bg-[#121720] text-slate-300 py-2 px-1 text-center border border-[#5a4a28] hover:border-[#f2ca50] hover:text-[#f2ca50] transition-colors">
+          MASCOTES
+        </button>
+<!-- Tab: Boosts & Gear -->
+<button class="bg-[#121720] text-slate-300 py-2 px-1 text-center border border-[#5a4a28] hover:border-[#f2ca50] hover:text-[#f2ca50] transition-colors">
+          BÔNUS
+        </button>
+<!-- Tab: Cosmetics -->
+<button class="bg-[#121720] text-slate-300 py-2 px-1 text-center border border-[#5a4a28] hover:border-[#f2ca50] hover:text-[#f2ca50] transition-colors">
+          RELÍQUIAS
+        </button>
+</div>
+</nav>
+<!-- SECTION TITLE WITH PIXEL DIVIDER -->
+<div class="flex items-center justify-between mb-3 px-1">
+<span class="text-[9px] text-slate-400 tracking-wider font-pixel flex items-center">
+<span class="text-[#f2ca50] mr-1.5">►</span> DESTAQUES
+      </span>
+<span class="text-[8px] text-[#f2ca50] tracking-wider">REPOSIÇÃO EM 04:12:08</span>
+</div>
+<!-- 3. SHOP GRID / ITEMS -->
+<div class="grid grid-cols-2 gap-3 mb-6">
+<!-- ITEM 1: Shadow Paladin Skin (Mythic) -->
+<div class="pixel-box bg-[#121720] p-2.5 flex flex-col justify-between border-2 border-[#5a4a28] hover:border-[#f2ca50] transition-all group">
+<div>
+<!-- Item Badge / Rarity -->
+<div class="flex items-center justify-between text-[7px] mb-2">
+<span class="px-1.5 py-0.5 bg-[#4c1d95] text-[#d8b4fe] border border-[#a855f7] font-bold">MÍTICO</span>
+<span class="text-slate-400">NÍV. 10+</span>
+</div>
+<!-- Item Graphic Frame with 16-Bit Pixel Art -->
+<div class="w-full aspect-square bg-[#090d13] border-2 border-[#2c3240] mb-2 relative overflow-hidden flex items-center justify-center p-1">
+<img alt="Aparência do Paladino das Sombras" class="w-full h-full object-cover pixelated" onerror="this.onerror=null; this.src='https://lh3.googleusercontent.com/aida/ALJJyrDm6DokmiSm4xNAuHGuYG3fgRmn5efj1Zag05RHfbXjDcfZzPTBW8wh2Ee42gK4txtuYsQaP8CVmFgW-Up1FWiCVhjT1OLUMmCxgDjmNp_Oe8n57a9Envn-hyhlZMBNMKSrMzphhaUJ3xx8OTXkUS74kEBCm47kegpgTRPeWYIFpiUjB0zqvKnzOeEvMJcwXhIO65PvSMl0QgYDlEmKXcuxaByiyRCfdEZI9fX9MSg';" src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+<div class="absolute bottom-1 right-1 bg-[#090d13] border border-[#5a4a28] text-[7px] text-[#f2ca50] px-1">
+              VISUAL
+            </div>
+</div>
+<!-- Title -->
+<h3 class="text-[8.5px] text-[#f2ca50] font-pixel leading-tight mb-1 truncate">Paladino das Sombras</h3>
+<!-- Stats / Description -->
+<p class="text-[7.5px] text-slate-300 font-vt tracking-wide text-xs leading-tight mb-2.5 h-8 overflow-hidden line-clamp-2">
+            +15% de vigor em missões matinais de cardio. Armadura de aço obsidiano.
+          </p>
+</div>
+<!-- Buy Button & Price -->
+<div class="pt-2 border-t border-[#1e2634]">
+<div class="flex items-center justify-between mb-1.5 text-[8px]">
+<span class="text-slate-400">CUSTO:</span>
+<div class="flex items-center text-[#f2ca50]">
+<span class="w-2.5 h-2.5 inline-block mr-1 bg-[#f2ca50] rounded-none"></span>
+<span>850 G</span>
+</div>
+</div>
+<button class="w-full bg-[#f2ca50] hover:bg-[#ffeaa7] text-[#090d13] font-bold py-1.5 px-2 text-[8px] uppercase tracking-wider border-b-2 border-[#8a6e26] border-r-2 active:translate-y-0.5 transition-all text-center">
+            ADQUIRIR
+          </button>
+</div>
+</div>
+<!-- ITEM 2: Flame Drake Hatchling (Companion) -->
+<div class="pixel-box bg-[#121720] p-2.5 flex flex-col justify-between border-2 border-[#5a4a28] hover:border-[#f2ca50] transition-all group">
+<div>
+<!-- Item Badge / Rarity -->
+<div class="flex items-center justify-between text-[7px] mb-2">
+<span class="px-1.5 py-0.5 bg-[#991b1b] text-[#fca5a5] border border-[#ef4444] font-bold">LENDÁRIO</span>
+<span class="text-slate-400">MASCOTE</span>
+</div>
+<!-- Item Graphic Frame -->
+<div class="w-full aspect-square bg-[#090d13] border-2 border-[#2c3240] mb-2 relative overflow-hidden flex items-center justify-center p-1">
+<img alt="Filhote de Draco Flamejante" class="w-full h-full object-cover pixelated" onerror="this.onerror=null; this.src='https://lh3.googleusercontent.com/aida/ALJJyrCpR5FRUPIcLRmHxhW-6JdDXOqrYv5T9SE_BDtUTSsfArLttB_3MDzHdMUoXbIi8bI6VNCOFrb675FoKZiqAyASPEErLsgfuzcOz7eGrl0FDKjh73cTCp759rD4pgJRn8inhEH7Em2lwlk6RUvBL6X_qsO7jmu3kJtjNHPsvvK8qI88KVHqwJChp7Q27golh5dzF-apHJ7Syb5z06rURedc3q240h5ekzF5PVNOhLpG';" src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+<div class="absolute bottom-1 right-1 bg-[#090d13] border border-[#ef4444] text-[7px] text-[#fca5a5] px-1">
+              DRACO
+            </div>
+</div>
+<!-- Title -->
+<h3 class="text-[8.5px] text-[#f2ca50] font-pixel leading-tight mb-1 truncate">Draco Flamejante</h3>
+<!-- Stats / Description -->
+<p class="text-[7.5px] text-slate-300 font-vt tracking-wide text-xs leading-tight mb-2.5 h-8 overflow-hidden line-clamp-2">
+            Causa +45 de dano extra a Ignis em incursões enquanto a sequência estiver ativa.
+          </p>
+</div>
+<!-- Buy Button & Price -->
+<div class="pt-2 border-t border-[#1e2634]">
+<div class="flex items-center justify-between mb-1.5 text-[8px]">
+<span class="text-slate-400">CUSTO:</span>
+<div class="flex items-center text-[#00e1d9]">
+<!-- Pixel Gem Icon -->
+<span class="w-2.5 h-2.5 inline-block mr-1 bg-[#00e1d9] rounded-none"></span>
+<span>25 GEMAS</span>
+</div>
+</div>
+<button class="w-full bg-[#00e1d9] hover:bg-[#78ffd6] text-[#090d13] font-bold py-1.5 px-2 text-[8px] uppercase tracking-wider border-b-2 border-[#0077b6] border-r-2 active:translate-y-0.5 transition-all text-center">
+            ADQUIRIR
+          </button>
+</div>
+</div>
+<!-- ITEM 3: Tome of Arcane Insight (Boost) -->
+<div class="pixel-box bg-[#121720] p-2.5 flex flex-col justify-between border-2 border-[#5a4a28] hover:border-[#f2ca50] transition-all group">
+<div>
+<!-- Item Badge / Rarity -->
+<div class="flex items-center justify-between text-[7px] mb-2">
+<span class="px-1.5 py-0.5 bg-[#065f46] text-[#6ee7b7] border border-[#10b981] font-bold">RARO</span>
+<span class="text-slate-400">BÔNUS</span>
+</div>
+<!-- Item Graphic Frame -->
+<div class="w-full aspect-square bg-[#090d13] border-2 border-[#2c3240] mb-2 relative overflow-hidden flex items-center justify-center p-1">
+<img alt="Tomo da Percepção Arcana" class="w-full h-full object-cover pixelated" onerror="this.onerror=null; this.src='https://lh3.googleusercontent.com/aida/ALJJyrA2XTWGcxqAxQ-I64IXDOIHNxi74yF7PlM7lUczUHXiKh_47CHFbEYCS0TAZK8DaFP5T_hIracUnP7Q5-g-h7KyrRM-ITJeyHe7Gbgx7hyxE6EEako2y9TKTWQxskMNMw1UNlOih1r1IO42t21ExIP5GyUCKItLiWl-47Y2qGTuR-FE3CzI83HocDvjsEU6TUpqurrMNxoqJMCiJr1I2gmmu5wSVkbwhWVHplWl0Wi8';" src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+<div class="absolute bottom-1 right-1 bg-[#090d13] border border-[#10b981] text-[7px] text-[#6ee7b7] px-1">
+              2X XP
+            </div>
+</div>
+<!-- Title -->
+<h3 class="text-[8.5px] text-[#f2ca50] font-pixel leading-tight mb-1 truncate">Tomo Arcano</h3>
+<!-- Stats / Description -->
+<p class="text-[7.5px] text-slate-300 font-vt tracking-wide text-xs leading-tight mb-2.5 h-8 overflow-hidden line-clamp-2">
+            Dobra o XP de estudos e missões de concentração profunda por 24h.
+          </p>
+</div>
+<!-- Buy Button & Price -->
+<div class="pt-2 border-t border-[#1e2634]">
+<div class="flex items-center justify-between mb-1.5 text-[8px]">
+<span class="text-slate-400">CUSTO:</span>
+<div class="flex items-center text-[#f2ca50]">
+<span class="w-2.5 h-2.5 inline-block mr-1 bg-[#f2ca50] rounded-none"></span>
+<span>450 G</span>
+</div>
+</div>
+<button class="w-full bg-[#f2ca50] hover:bg-[#ffeaa7] text-[#090d13] font-bold py-1.5 px-2 text-[8px] uppercase tracking-wider border-b-2 border-[#8a6e26] border-r-2 active:translate-y-0.5 transition-all text-center">
+            ADQUIRIR
+          </button>
+</div>
+</div>
+<!-- ITEM 4: Aegis of Tenacity (Gear) -->
+<div class="pixel-box bg-[#121720] p-2.5 flex flex-col justify-between border-2 border-[#5a4a28] hover:border-[#f2ca50] transition-all group">
+<div>
+<!-- Item Badge / Rarity -->
+<div class="flex items-center justify-between text-[7px] mb-2">
+<span class="px-1.5 py-0.5 bg-[#1e3a8a] text-[#93c5fd] border border-[#3b82f6] font-bold">ÉPICO</span>
+<span class="text-slate-400">PROTEÇÃO</span>
+</div>
+<!-- Item Graphic Frame with Pixel Emblem -->
+<div class="w-full aspect-square bg-[#090d13] border-2 border-[#2c3240] mb-2 relative overflow-hidden flex items-center justify-center p-2">
+<img alt="Égide da Tenacidade" class="w-full h-full object-contain pixelated" onerror="this.onerror=null; this.src='https://lh3.googleusercontent.com/aida/ALJJyrCOkFR5u2_RJB7RGNZxT6-H_-U2WSgCh0rLjXIkU50fAGIiQFs9NDCPOZMKKLyh_PcN0B2bLo-dNUYStOhFJMIrWZsHxvmZD2dt6dtZrIo6enGql7z_nRhC2koDaI5J-7wTAyNPO6MXAckWuVBow3ZSCHsJfVb9zoBEIRyD85xqQMacroiadASgbDJpbEz1ZRFwh3uPUE2zFYZ58NSw3s_-YVSL1j5ij_fduLYXE8pt';" src="https://www.gstatic.com/labs-code/stitch/stitch-placeholder-300x300.svg"/>
+<div class="absolute bottom-1 right-1 bg-[#090d13] border border-[#3b82f6] text-[7px] text-[#93c5fd] px-1">
+              RELÍQUIA
+            </div>
+</div>
+<!-- Title -->
+<h3 class="text-[8.5px] text-[#f2ca50] font-pixel leading-tight mb-1 truncate">Égide da Tenacidade</h3>
+<!-- Stats / Description -->
+<p class="text-[7.5px] text-slate-300 font-vt tracking-wide text-xs leading-tight mb-2.5 h-8 overflow-hidden line-clamp-2">
+            Impede a perda de PV por uma missão diária não cumprida a cada ciclo da guilda.
+          </p>
+</div>
+<!-- Buy Button & Price -->
+<div class="pt-2 border-t border-[#1e2634]">
+<div class="flex items-center justify-between mb-1.5 text-[8px]">
+<span class="text-slate-400">CUSTO:</span>
+<div class="flex items-center text-[#00e1d9]">
+<span class="w-2.5 h-2.5 inline-block mr-1 bg-[#00e1d9] rounded-none"></span>
+<span>15 GEMAS</span>
+</div>
+</div>
+<button class="w-full bg-[#00e1d9] hover:bg-[#78ffd6] text-[#090d13] font-bold py-1.5 px-2 text-[8px] uppercase tracking-wider border-b-2 border-[#0077b6] border-r-2 active:translate-y-0.5 transition-all text-center">
+            ADQUIRIR
+          </button>
+</div>
+</div>
+</div>
+<!-- DAILY SPECIAL OFFER BANNER -->
+<div class="pixel-box bg-[#161d28] p-3 border-2 border-[#f2ca50] mb-6 relative">
+<div class="flex items-start space-x-3">
+<!-- Icon -->
+<div class="w-10 h-10 bg-[#090d13] border border-[#f2ca50] flex items-center justify-center shrink-0">
+<svg class="w-6 h-6 text-[#f2ca50]" fill="currentColor" viewbox="0 0 24 24">
+<path d="M12 2L4 7v10l8 5 8-5V7l-8-5zm0 2.8L18 8.5v7L12 19.2 6 15.5v-7L12 4.8z"></path>
+</svg>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<h4 class="text-[9px] text-[#f2ca50] font-pixel">Passe do Cofre do Bazar</h4>
+<span class="text-[7px] bg-[#991b1b] text-white px-1 border border-[#ef4444]">-30%</span>
+</div>
+<p class="text-[8px] text-slate-300 font-vt tracking-wide text-xs mt-1">Desbloqueia um multiplicador de espólios para as missões de toda a guilda e molduras celestiais exclusivas.</p>
+<div class="mt-2 flex items-center justify-between">
+<span class="text-[8px] text-[#f2ca50]">1,200 G <span class="line-through text-slate-500 text-[7px]">1,750 G</span></span>
+<button class="bg-[#f2ca50] text-[#090d13] text-[7.5px] font-bold px-2 py-1 uppercase border-b-2 border-[#8a6e26] active:translate-y-0.5">
+              DESBLOQUEAR PASSE
+            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating 16-Bit Pixel Crystal Emblem -->
+<div class="fixed bottom-4 left-1/2 -translate-x-1/2 z-[60] pointer-events-auto">
+  <a href="dashboard.html" aria-label="Portal - Painel" class="relative w-14 h-14 bg-[#121720] border-2 border-[#f2ca50] shadow-[0_0_0_2px_#000,0_0_12px_rgba(0,241,253,0.5)] flex items-center justify-center pixel-crystal-glow active:scale-90 transition-transform">
+    <img src="../static/img/logo_ascendia.png" class="w-full h-full object-contain [image-rendering:pixelated]" alt="ASC">
+  </a>
+</div>
+<!-- Bottom Navigation Bar (Retro 16-Bit Menu Bar) -->
+<nav class="fixed bottom-0 left-0 right-0 w-full z-50 flex justify-around items-center px-1 py-1 max-w-md mx-auto bg-[#121720] border-t-2 border-[#5a4a28] shadow-[0_-4px_10px_rgba(0,0,0,0.8)]">
+<!-- Quests -->
+<a class="flex flex-col items-center justify-center text-[#8fa2b8] hover:text-[#ffe088] transition-colors w-16 py-1 active:scale-95" href="dashboard.html">
+<span class="material-symbols-outlined text-xl">swords</span>
+<span class="font-silkscreen text-[8px] mt-0.5">MISSÕES</span>
+</a>
+<!-- Shop (Active Item) -->
+<a class="flex flex-col items-center justify-center text-primary font-bold w-16 py-1 active:scale-95 border-b-2 border-primary" href="shop.html">
+<span class="material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">storefront</span>
+<span class="font-silkscreen text-[8px] mt-0.5">LOJA</span>
+</a>
+<!-- Spacer for Pixel Crystal -->
+<div class="w-12 h-6 pointer-events-none"></div>
+<!-- Guild -->
+<a class="flex flex-col items-center justify-center text-[#8fa2b8] hover:text-[#ffe088] transition-colors w-16 py-1 active:scale-95" href="guild.html">
+<span class="material-symbols-outlined text-xl">shield</span>
+<span class="font-silkscreen text-[8px] mt-0.5">GUILDA</span>
+</a>
+<!-- Hero -->
+<a class="flex flex-col items-center justify-center text-[#8fa2b8] hover:text-[#ffe088] transition-colors w-16 py-1 active:scale-95" href="hero.html">
+<span class="material-symbols-outlined text-xl">person</span>
+<span class="font-silkscreen text-[8px] mt-0.5">HERÓI</span>
+</a>
+</nav>
+</body>
+</html>

@@ -1,499 +1,264 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
+<html lang="en"><head>
 <meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Ascendia - Tavern Gate</title>
-<!-- Fonts -->
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Ascendia - Portal do Reino</title>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Pixel Fonts -->
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;family=Silkscreen:wght@400;700&amp;family=Geist:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<!-- Material Symbols Outlined -->
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;family=VT323&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script>
     tailwind.config = {
-      darkMode: "class",
       theme: {
         extend: {
-          "colors": {
-            "error": "#ffb4ab",
-            "primary": "#f2ca50",
-            "primary-fixed-dim": "#e9c349",
-            "surface-variant": "#30353d",
-            "secondary-fixed": "#6ff6ff",
-            "surface-dim": "#0f141b",
-            "on-error-container": "#ffdad6",
-            "inverse-surface": "#dee2ec",
-            "surface-container-highest": "#30353d",
-            "surface-container": "#1b2027",
-            "on-tertiary": "#680013",
-            "surface-container-low": "#171c23",
-            "tertiary-container": "#ff9596",
-            "primary-container": "#d4af37",
-            "surface-bright": "#343941",
-            "surface-container-lowest": "#090f15",
-            "on-surface-variant": "#d0c5af",
-            "inverse-primary": "#735c00",
-            "on-secondary-fixed-variant": "#004f53",
-            "on-error": "#690005",
-            "outline": "#99907c",
-            "secondary": "#dcfdff",
-            "tertiary-fixed-dim": "#ffb3b2",
-            "on-tertiary-container": "#8f001f",
-            "on-tertiary-fixed-variant": "#920020",
-            "primary-fixed": "#ffe088",
-            "surface": "#0f141b",
-            "on-primary-container": "#554300",
-            "surface-container-high": "#252a32",
-            "on-primary-fixed-variant": "#574500",
-            "surface-tint": "#e9c349",
-            "on-surface": "#dee2ec",
-            "secondary-fixed-dim": "#00dce6",
-            "outline-variant": "#4d4635",
-            "on-background": "#dee2ec",
-            "tertiary-fixed": "#ffdad9",
-            "inverse-on-surface": "#2c3138",
-            "on-secondary-fixed": "#002022",
-            "error-container": "#93000a",
-            "secondary-container": "#00f1fd",
-            "on-secondary": "#00373a",
-            "on-tertiary-fixed": "#410008",
-            "on-secondary-container": "#006a6f",
-            "background": "#0f141b",
-            "on-primary-fixed": "#241a00",
-            "on-primary": "#3c2f00",
-            "tertiary": "#ffbebd"
+          colors: {
+            retroBg: '#090d13',
+            retroCard: '#111722',
+            retroInput: '#080c12',
+            goldLight: '#ffe596',
+            goldMid: '#f2ca50',
+            goldDark: '#997312',
+            goldBorder: '#5a4a28',
+            cyanGlow: '#00e1d9',
+            slateDark: '#1c2533',
+            slateBorder: '#2e3a4e'
           },
-          "fontFamily": {
-            "pixel": ["'Press Start 2P'", "monospace"],
-            "silkscreen": ["'Silkscreen'", "monospace"],
-            "body-sm": ["Geist"],
-            "body-md": ["Geist"],
-            "label-sm": ["'Silkscreen'", "monospace"],
-            "label-md": ["'Silkscreen'", "monospace"],
-            "label-lg": ["'Press Start 2P'", "monospace"]
+          fontFamily: {
+            pixel: ['"Press Start 2P"', 'monospace'],
+            retroText: ['"VT323"', 'monospace']
           }
-        },
-      },
-    }
-  </script>
-<style>
-    .material-symbols-outlined {
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-    }
-    
-    /* Authentic 16-bit Pixel Shading and Bevels */
-    .pixel-box-main {
-      box-shadow: 
-        inset -3px -3px 0px 0px #080c12,
-        inset 3px 3px 0px 0px #3a4250,
-        0 0 0 2px #000000,
-        0 0 0 4px #d4af37,
-        0 8px 24px rgba(0, 0, 0, 0.7);
-    }
-    .pixel-box-card {
-      box-shadow: 
-        inset -2px -2px 0px 0px #0b0f16,
-        inset 2px 2px 0px 0px #3c4454;
-    }
-    .pixel-box-card-active {
-      box-shadow: 
-        inset -2px -2px 0px 0px #705500,
-        inset 2px 2px 0px 0px #fff2a3,
-        0 0 12px rgba(242, 202, 80, 0.35);
-    }
-    .pixel-btn-gold {
-      box-shadow: 
-        inset -3px -3px 0px 0px #5c4300,
-        inset 3px 3px 0px 0px #fff5b3,
-        0 4px 0px #241a00;
-    }
-    .pixel-btn-gold:active {
-      box-shadow: 
-        inset 3px 3px 0px 0px #5c4300,
-        inset -2px -2px 0px 0px #fff5b3;
-      transform: translateY(2px);
-    }
-    .pixel-tab-inactive {
-      box-shadow: 
-        inset -2px -2px 0px #090f15,
-        inset 2px 2px 0px #2a313d;
-    }
-    .pixel-tab-active {
-      box-shadow: 
-        inset -2px -2px 0px #634b00,
-        inset 2px 2px 0px #fff099;
-    }
-    .pixel-input {
-      box-shadow: 
-        inset 2px 2px 0px #05080c,
-        inset -2px -2px 0px #222935;
-    }
-    .pixel-text-shadow {
-      text-shadow: 2px 2px 0px #000000, -1px -1px 0px #000000;
-    }
-    .pixel-text-gold {
-      text-shadow: 2px 2px 0px #4d3800, -1px -1px 0px #000, 0 0 8px rgba(242, 202, 80, 0.6);
-    }
-    .pixel-scanline {
-      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
-      background-size: 100% 3px, 6px 100%;
-    }
-    .retro-grid {
-      background-image: 
-        linear-gradient(to right, rgba(212, 175, 55, 0.06) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(212, 175, 55, 0.06) 1px, transparent 1px);
-      background-size: 16px 16px;
-    }
-    .hide-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
-    .hide-scrollbar {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-    @keyframes pixel-float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-4px); }
-    }
-    .animate-pixel-float {
-      animation: pixel-float 2.4s ease-in-out infinite;
-    }
-    @keyframes blink {
-      0%, 49% { opacity: 1; }
-      50%, 100% { opacity: 0; }
-    }
-    .pixel-cursor {
-      animation: blink 1s infinite steps(1);
-    }
-  </style>
-</head>
-<body class="bg-surface-container-lowest text-on-surface antialiased selection:bg-primary selection:text-surface-dim min-h-screen relative overflow-x-hidden pb-28 font-silkscreen">
-<!-- CRT Scanline & Retro Grid Background Overlays -->
-<div class="fixed inset-0 pointer-events-none retro-grid z-0 opacity-40"></div>
-<div class="fixed inset-0 pointer-events-none pixel-scanline z-0"></div>
-<div class="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-md h-96 bg-[radial-gradient(circle_at_center,_rgba(242,202,80,0.15)_0%,_transparent_70%)] pointer-events-none z-0"></div>
-<!-- Main Container constrained to Mobile viewport -->
-<div class="relative z-10 w-full max-w-md mx-auto min-h-screen flex flex-col justify-between px-3 pt-3">
-<!-- Top Branding & Pixel Emblem -->
-<header class="flex flex-col items-center text-center mt-2 mb-3">
-<!-- 16-Bit Pixel Emblem Crest with Floating Aura -->
-<div class="relative group cursor-pointer mb-2 animate-pixel-float">
-<div class="absolute -inset-2 bg-primary/20 blur-md rounded-none"></div>
-<div class="relative w-20 h-20 p-1.5 bg-[#090f15] border-2 border-primary shadow-[0_0_15px_rgba(242,202,80,0.4)] flex items-center justify-center">
-<!-- Outer pixel corners -->
-<div class="absolute -top-1 -left-1 w-2 h-2 bg-primary"></div>
-<div class="absolute -top-1 -right-1 w-2 h-2 bg-primary"></div>
-<div class="absolute -bottom-1 -left-1 w-2 h-2 bg-primary"></div>
-<div class="absolute -bottom-1 -right-1 w-2 h-2 bg-primary"></div>
-<img src="../static/img/logo_ascendia.png" class="w-full h-full object-contain [image-rendering:pixelated]" alt="Ascendia Logo">
-</div>
-<!-- Runic Pixel Mana Indicator -->
-<span class="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-secondary-container border border-black shadow flex items-center justify-center">
-<span class="w-1.5 h-1.5 bg-white pixel-cursor"></span>
-</span>
-</div>
-<!-- 16-Bit Pixel RPG Title -->
-<h1 class="font-pixel text-[22px] tracking-wider text-primary pixel-text-gold mt-1 leading-snug">
-  ASCENDIA
-</h1>
-<!-- Pixel Banner Subtitle -->
-<div class="mt-1 px-3 py-1 bg-surface-container-high/90 border border-outline-variant/80 shadow">
-<p class="font-silkscreen text-[9px] tracking-wider text-primary-fixed uppercase">
-    ⚔ Forge Your Legend Through Discipline ⚔
-  </p>
-</div>
-<!-- Auth Segmented Toggle (Chunky 16-bit RPG Menu Tabs) -->
-<div class="mt-3 w-full bg-[#090f15] p-1 border-2 border-outline-variant flex items-center gap-1">
-<button class="flex-1 py-2 text-center font-pixel text-[9px] pixel-tab-inactive text-on-surface-variant hover:text-primary transition-all duration-150 uppercase" id="tab-login" onclick="switchAuthTab('login')">
-    Enter Tavern
-  </button>
-<button class="flex-1 py-2 text-center font-pixel text-[9px] pixel-tab-active bg-gradient-to-b from-[#f2ca50] to-[#b88c1c] text-[#241a00] font-bold uppercase transition-all duration-150" id="tab-register" onclick="switchAuthTab('register')">
-    Create Hero
-  </button>
-</div>
-</header>
-<!-- Tavern Gate Parchment/Relic Card with 16-bit JRPG Dialog Frame -->
-<main class="w-full bg-[#131922] pixel-box-main p-3.5 relative overflow-hidden">
-<!-- Pixel Filigree Corner Accents -->
-<div class="absolute top-1 left-1 w-2 h-2 bg-primary"></div>
-<div class="absolute top-1 right-1 w-2 h-2 bg-primary"></div>
-<div class="absolute bottom-1 left-1 w-2 h-2 bg-primary"></div>
-<div class="absolute bottom-1 right-1 w-2 h-2 bg-primary"></div>
-<!-- Class Selection Carousel (Registration Mode) -->
-<div class="mb-3.5" id="class-selector-section">
-<div class="flex justify-between items-center mb-1.5 pb-1 border-b border-outline-variant/50">
-<span class="font-pixel text-[8px] text-primary uppercase tracking-wide flex items-center gap-1">
-<span class="material-symbols-outlined text-[13px] text-primary" data-icon="token">token</span>
-        SELECT CALLING
-      </span>
-<span class="font-pixel text-[8px] text-secondary-fixed">STAGE I</span>
-</div>
-<!-- Horizontal Class Cards Carousel -->
-<div class="flex gap-2 overflow-x-auto hide-scrollbar pb-1 pt-1 -mx-0.5 px-0.5">
-<!-- Class Card: Warrior (Active) -->
-<div class="class-card min-w-[195px] flex-shrink-0 bg-[#1c2431] p-2.5 border-2 border-primary pixel-box-card-active cursor-pointer transition-all" onclick="selectClass(this, 'Warrior')">
-<div class="flex items-start justify-between">
-<div class="w-8 h-8 bg-[#090f15] border border-primary flex items-center justify-center text-primary shadow-inner">
-<span class="material-symbols-outlined text-[18px]" data-icon="swords">swords</span>
-</div>
-<span class="font-pixel text-[8px] px-1 py-0.5 bg-[#4a3a00] text-primary border border-primary font-bold">
-            WARRIOR
-          </span>
-</div>
-<h4 class="font-pixel text-[10px] text-primary-fixed mt-2 leading-tight">Iron Bastion</h4>
-<p class="font-silkscreen text-[9px] text-on-surface-variant text-[10px] mt-0.5">HP Tank &amp; Grit</p>
-<!-- Pixel Segmented Stat Bars -->
-<div class="mt-2 space-y-1.5 pt-1.5 border-t border-outline-variant/60">
-<div>
-<div class="flex justify-between text-[8px] font-pixel text-on-surface-variant">
-<span>HP BOOST</span>
-<span class="text-tertiary-container">+40</span>
-</div>
-<!-- Chunky Pixel Stat Bar (HP) -->
-<div class="w-full bg-[#080d13] h-2 border border-outline-variant/80 p-0.5 flex gap-0.5 mt-0.5">
-<span class="bg-red-500 h-full w-[20%]"></span>
-<span class="bg-red-500 h-full w-[20%]"></span>
-<span class="bg-red-500 h-full w-[20%]"></span>
-<span class="bg-red-400 h-full w-[20%]"></span>
-<span class="bg-[#1b222d] h-full w-[20%]"></span>
-</div>
-</div>
-<div>
-<div class="flex justify-between text-[8px] font-pixel text-on-surface-variant">
-<span>HABIT XP</span>
-<span class="text-primary">+15%</span>
-</div>
-<!-- Chunky Pixel Stat Bar (XP) -->
-<div class="w-full bg-[#080d13] h-2 border border-outline-variant/80 p-0.5 flex gap-0.5 mt-0.5">
-<span class="bg-yellow-500 h-full w-[20%]"></span>
-<span class="bg-yellow-500 h-full w-[20%]"></span>
-<span class="bg-yellow-400 h-full w-[20%]"></span>
-<span class="bg-[#1b222d] h-full w-[20%]"></span>
-<span class="bg-[#1b222d] h-full w-[20%]"></span>
-</div>
-</div>
-</div>
-</div>
-<!-- Class Card: Mage -->
-<div class="class-card min-w-[195px] flex-shrink-0 bg-[#161c27] p-2.5 border border-outline-variant pixel-box-card opacity-80 hover:opacity-100 cursor-pointer transition-all" onclick="selectClass(this, 'Mage')">
-<div class="flex items-start justify-between">
-<div class="w-8 h-8 bg-[#090f15] border border-secondary/50 flex items-center justify-center text-secondary-container shadow-inner">
-<span class="material-symbols-outlined text-[18px]" data-icon="auto_awesome">auto_awesome</span>
-</div>
-<span class="font-pixel text-[8px] px-1 py-0.5 bg-[#002f33] text-secondary-fixed border border-secondary/40 font-bold">
-            MAGE
-          </span>
-</div>
-<h4 class="font-pixel text-[10px] text-on-surface mt-2 leading-tight">Arcane Scholar</h4>
-<p class="font-silkscreen text-[9px] text-on-surface-variant text-[10px] mt-0.5">Focus &amp; Deep Work</p>
-<div class="mt-2 space-y-1.5 pt-1.5 border-t border-outline-variant/60">
-<div>
-<div class="flex justify-between text-[8px] font-pixel text-on-surface-variant">
-<span>MANA</span>
-<span class="text-secondary-fixed">+50</span>
-</div>
-<div class="w-full bg-[#080d13] h-2 border border-outline-variant/80 p-0.5 flex gap-0.5 mt-0.5">
-<span class="bg-cyan-400 h-full w-[20%]"></span>
-<span class="bg-cyan-400 h-full w-[20%]"></span>
-<span class="bg-cyan-400 h-full w-[20%]"></span>
-<span class="bg-cyan-400 h-full w-[20%]"></span>
-<span class="bg-cyan-300 h-full w-[20%]"></span>
-</div>
-</div>
-<div>
-<div class="flex justify-between text-[8px] font-pixel text-on-surface-variant">
-<span>WARD</span>
-<span class="text-secondary-container">1 SHIELD</span>
-</div>
-<div class="w-full bg-[#080d13] h-2 border border-outline-variant/80 p-0.5 flex gap-0.5 mt-0.5">
-<span class="bg-cyan-500 h-full w-[20%]"></span>
-<span class="bg-cyan-500 h-full w-[20%]"></span>
-<span class="bg-[#1b222d] h-full w-[20%]"></span>
-<span class="bg-[#1b222d] h-full w-[20%]"></span>
-<span class="bg-[#1b222d] h-full w-[20%]"></span>
-</div>
-</div>
-</div>
-</div>
-<!-- Class Card: Rogue -->
-<div class="class-card min-w-[195px] flex-shrink-0 bg-[#161c27] p-2.5 border border-outline-variant pixel-box-card opacity-80 hover:opacity-100 cursor-pointer transition-all" onclick="selectClass(this, 'Rogue')">
-<div class="flex items-start justify-between">
-<div class="w-8 h-8 bg-[#090f15] border border-primary-fixed/50 flex items-center justify-center text-primary-fixed shadow-inner">
-<span class="material-symbols-outlined text-[18px]" data-icon="flare">flare</span>
-</div>
-<span class="font-pixel text-[8px] px-1 py-0.5 bg-[#3a2800] text-primary-fixed border border-primary/40 font-bold">
-            ROGUE
-          </span>
-</div>
-<h4 class="font-pixel text-[10px] text-on-surface mt-2 leading-tight">Shadow Rogue</h4>
-<p class="font-silkscreen text-[9px] text-on-surface-variant text-[10px] mt-0.5">Agility &amp; Speed</p>
-<div class="mt-2 space-y-1.5 pt-1.5 border-t border-outline-variant/60">
-<div>
-<div class="flex justify-between text-[8px] font-pixel text-on-surface-variant">
-<span>CRIT BONUS</span>
-<span class="text-primary-fixed">2x XP</span>
-</div>
-<div class="w-full bg-[#080d13] h-2 border border-outline-variant/80 p-0.5 flex gap-0.5 mt-0.5">
-<span class="bg-amber-400 h-full w-[20%]"></span>
-<span class="bg-amber-400 h-full w-[20%]"></span>
-<span class="bg-amber-400 h-full w-[20%]"></span>
-<span class="bg-[#1b222d] h-full w-[20%]"></span>
-<span class="bg-[#1b222d] h-full w-[20%]"></span>
-</div>
-</div>
-<div>
-<div class="flex justify-between text-[8px] font-pixel text-on-surface-variant">
-<span>GOLD FIND</span>
-<span class="text-primary">+25%</span>
-</div>
-<div class="w-full bg-[#080d13] h-2 border border-outline-variant/80 p-0.5 flex gap-0.5 mt-0.5">
-<span class="bg-yellow-400 h-full w-[20%]"></span>
-<span class="bg-yellow-400 h-full w-[20%]"></span>
-<span class="bg-yellow-400 h-full w-[20%]"></span>
-<span class="bg-yellow-300 h-full w-[20%]"></span>
-<span class="bg-[#1b222d] h-full w-[20%]"></span>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Authentication Form Elements (16-bit RPG Dialogue Input) -->
-<form class="space-y-3" onsubmit="event.preventDefault();">
-<!-- Field 1: Hero Name / Email -->
-<div>
-<label class="block font-pixel text-[8px] text-primary mb-1.5 flex items-center gap-1.5">
-<span class="text-primary font-bold">►</span>
-        HERO NAME / EMAIL
-      </label>
-<div class="relative bg-[#090f15] border-2 border-outline-variant pixel-input focus-within:border-primary transition-colors flex items-center">
-<span class="pl-2.5 text-primary text-[11px] font-pixel">»</span>
-<input class="w-full bg-transparent px-2 py-2 text-on-surface placeholder:text-outline font-silkscreen text-[11px] focus:outline-none border-none tracking-wider" placeholder="Roland or traveler@guild.io" type="text"/>
-<span class="pr-2.5 text-outline/60">
-<span class="material-symbols-outlined text-[16px]" data-icon="fingerprint">fingerprint</span>
-</span>
-</div>
-</div>
-<!-- Field 2: Passcode Secret -->
-<div>
-<div class="flex justify-between items-center mb-1.5">
-<label class="font-pixel text-[8px] text-primary flex items-center gap-1.5">
-<span class="text-primary font-bold">►</span>
-          PASSPHRASE RUNE
-        </label>
-<a class="font-pixel text-[8px] text-secondary-fixed hover:underline" href="#">FORGOT?</a>
-</div>
-<div class="relative bg-[#090f15] border-2 border-outline-variant pixel-input focus-within:border-primary transition-colors flex items-center">
-<span class="pl-2.5 text-primary text-[11px] font-pixel">»</span>
-<input class="w-full bg-transparent px-2 py-2 text-on-surface placeholder:text-outline font-silkscreen text-[11px] focus:outline-none border-none tracking-widest" placeholder="••••••••••••" type="password" value="secretrunestone"/>
-<button class="pr-2.5 text-outline hover:text-primary transition-colors" type="button">
-<span class="material-symbols-outlined text-[16px]" data-icon="visibility">visibility</span>
-</button>
-</div>
-</div>
-<!-- Checkbox / Pact Seal -->
-<div class="flex items-center gap-2 pt-0.5">
-<input checked="" class="w-4 h-4 rounded-none bg-[#090f15] border-2 border-primary text-primary focus:ring-0 focus:ring-offset-0 cursor-pointer" id="oath-seal" type="checkbox"/>
-<label class="font-silkscreen text-[10px] text-on-surface-variant cursor-pointer select-none" for="oath-seal">
-        Swear the Daily Honor Oath &amp; auto-sync stats
-      </label>
-</div>
-<!-- Primary CTA: 16-Bit Gold Action Button -->
-<button class="w-full mt-2 py-3 px-3 font-pixel text-[11px] text-[#241a00] bg-gradient-to-b from-[#ffe088] via-[#f2ca50] to-[#b88c1c] border-2 border-[#fff5b3] pixel-btn-gold active:scale-[0.99] transition-all flex items-center justify-center gap-2 tracking-wider" type="submit">
-<span class="material-symbols-outlined text-[18px]" data-icon="swords">swords</span>
-<span>ENTER REALM</span>
-<span class="material-symbols-outlined text-[18px]" data-icon="swords">swords</span>
-</button>
-</form>
-<!-- Divider / Guild Hall Pass -->
-<div class="flex items-center my-3">
-<div class="flex-grow border-t-2 border-dashed border-outline-variant/60"></div>
-<span class="px-2 font-pixel text-[7px] text-outline uppercase tracking-widest">OR SUMMON VIA</span>
-<div class="flex-grow border-t-2 border-dashed border-outline-variant/60"></div>
-</div>
-<!-- Social Summon Logins (Chunky Pixel Action Cards) -->
-<div class="grid grid-cols-2 gap-2">
-<button class="py-2 px-2 bg-[#1b222e] border-2 border-outline-variant pixel-tab-inactive hover:border-primary/80 hover:bg-[#252f3f] transition-all flex items-center justify-center gap-1.5 text-on-surface text-[10px] font-pixel" type="button">
-<span class="material-symbols-outlined text-[16px] text-primary" data-icon="language">language</span>
-<span>GOOGLE</span>
-</button>
-<button class="py-2 px-2 bg-[#1b222e] border-2 border-outline-variant pixel-tab-inactive hover:border-secondary/80 hover:bg-[#252f3f] transition-all flex items-center justify-center gap-1.5 text-on-surface text-[10px] font-pixel" type="button">
-<span class="material-symbols-outlined text-[16px] text-secondary-fixed" data-icon="shield">shield</span>
-<span>APPLE</span>
-</button>
-</div>
-</main>
-<!-- Bottom Server Lore Bar -->
-<div class="text-center my-2.5">
-<div class="inline-flex items-center gap-1.5 px-3 py-1 bg-[#090f15] border border-outline-variant text-[9px] font-pixel text-outline">
-<span class="w-1.5 h-1.5 bg-secondary-container pixel-cursor"></span>
-    SERVER: <span class="text-primary-fixed">AETHELGARD CITADEL [v2.4]</span>
-</div>
-</div>
-</div>
-<!-- Shared Component: BottomNavBar (16-Bit Pixel Art Fixed Shell) -->
-<nav class="fixed bottom-0 left-0 right-0 w-full z-50 flex justify-around items-center px-1 py-1 max-w-md mx-auto bg-[#0a0f16] border-t-2 border-outline-variant shadow-[0_-4px_16px_rgba(0,0,0,0.8)]">
-<!-- Quests Tab -->
-<a class="flex flex-col items-center justify-center text-outline hover:text-primary transition-colors py-1 px-2.5" href="#">
-<span class="material-symbols-outlined text-[20px]" data-icon="swords">swords</span>
-<span class="text-[8px] font-pixel mt-1">QUESTS</span>
-</a>
-<!-- Shop Tab -->
-<a class="flex flex-col items-center justify-center text-outline hover:text-primary transition-colors py-1 px-2.5" href="#">
-<span class="material-symbols-outlined text-[20px]" data-icon="storefront">storefront</span>
-<span class="text-[8px] font-pixel mt-1">SHOP</span>
-</a>
-<!-- Center Floating 16-Bit Pixel Crystal Emblem Docked Action -->
-<div class="-mt-7 flex flex-col items-center">
-<button class="relative w-12 h-12 bg-[#090f15] border-2 border-primary flex items-center justify-center shadow-[0_0_12px_rgba(242,202,80,0.5)] group hover:scale-105 active:scale-95 transition-all">
-<!-- Pixel aura -->
-<div class="absolute -top-1 -left-1 w-1.5 h-1.5 bg-primary"></div>
-<div class="absolute -top-1 -right-1 w-1.5 h-1.5 bg-primary"></div>
-<div class="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-primary"></div>
-<div class="absolute -bottom-1 -right-1 w-1.5 h-1.5 bg-primary"></div>
-<img src="../static/img/logo_ascendia.png" class="w-full h-full object-contain [image-rendering:pixelated]" alt="ASC">
-</button>
-<span class="text-[7px] font-pixel text-primary tracking-widest mt-1 font-bold">PORTAL</span>
-</div>
-<!-- Guild Tab -->
-<a class="flex flex-col items-center justify-center text-outline hover:text-primary transition-colors py-1 px-2.5" href="#">
-<span class="material-symbols-outlined text-[20px]" data-icon="shield">shield</span>
-<span class="text-[8px] font-pixel mt-1">GUILD</span>
-</a>
-<!-- Hero Tab (Active Navigation Lock) -->
-<a class="flex flex-col items-center justify-center text-primary font-bold py-1 px-2.5" href="#">
-<span class="material-symbols-outlined text-[20px]" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
-<span class="text-[8px] font-pixel mt-1">HERO</span>
-</a>
-</nav>
-<!-- Interactive State Script for Tavern Gates -->
-<script>
-    function selectClass(element, className) {
-      document.querySelectorAll('.class-card').forEach(card => {
-        card.classList.remove('border-2', 'border-primary', 'pixel-box-card-active', 'bg-[#1c2431]', 'opacity-100');
-        card.classList.add('border', 'border-outline-variant', 'bg-[#161c27]', 'opacity-80', 'pixel-box-card');
-      });
-      element.classList.remove('border', 'border-outline-variant', 'bg-[#161c27]', 'opacity-80', 'pixel-box-card');
-      element.classList.add('border-2', 'border-primary', 'pixel-box-card-active', 'bg-[#1c2431]', 'opacity-100');
-    }
-
-    function switchAuthTab(mode) {
-      const loginBtn = document.getElementById('tab-login');
-      const registerBtn = document.getElementById('tab-register');
-      const classSection = document.getElementById('class-selector-section');
-      
-      if (mode === 'login') {
-        loginBtn.className = "flex-1 py-2 text-center font-pixel text-[9px] pixel-tab-active bg-gradient-to-b from-[#f2ca50] to-[#b88c1c] text-[#241a00] font-bold uppercase transition-all duration-150";
-        registerBtn.className = "flex-1 py-2 text-center font-pixel text-[9px] pixel-tab-inactive text-on-surface-variant hover:text-primary transition-all duration-150 uppercase";
-        classSection.classList.add('hidden');
-      } else {
-        registerBtn.className = "flex-1 py-2 text-center font-pixel text-[9px] pixel-tab-active bg-gradient-to-b from-[#f2ca50] to-[#b88c1c] text-[#241a00] font-bold uppercase transition-all duration-150";
-        loginBtn.className = "flex-1 py-2 text-center font-pixel text-[9px] pixel-tab-inactive text-on-surface-variant hover:text-primary transition-all duration-150 uppercase";
-        classSection.classList.remove('hidden');
+        }
       }
     }
   </script>
+<!-- Base Custom Pixel Styling -->
+<style data-purpose="pixel-effects">
+    /* Scanlines and pixel screen feel */
+    body {
+      background-color: #090d13;
+      background-image: 
+        linear-gradient(rgba(18, 23, 32, 0.9) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(18, 23, 32, 0.9) 1px, transparent 1px);
+      background-size: 16px 16px;
+      font-family: 'Press Start 2P', monospace;
+      image-rendering: pixelated;
+    }
+
+    /* 16-Bit Beveled Button Style */
+    .pixel-btn-gold {
+      background: linear-gradient(180deg, #fce07a 0%, #f2ca50 50%, #c49925 100%);
+      box-shadow: 
+        inset -3px -3px 0px 0px #825f0a,
+        inset 3px 3px 0px 0px #fff4a3,
+        0 4px 0 0 #3e2d03;
+      transition: transform 0.05s, box-shadow 0.05s;
+    }
+    .pixel-btn-gold:active {
+      transform: translateY(3px);
+      box-shadow: 
+        inset -2px -2px 0px 0px #825f0a,
+        inset 2px 2px 0px 0px #fff4a3,
+        0 1px 0 0 #3e2d03;
+    }
+
+    /* Secondary Pixel Button */
+    .pixel-btn-secondary {
+      background-color: #121926;
+      box-shadow: 
+        inset -2px -2px 0px 0px #090d14,
+        inset 2px 2px 0px 0px #2a374f,
+        0 3px 0 0 #07090e;
+      border: 2px solid #2e3d54;
+    }
+    .pixel-btn-secondary:active {
+      transform: translateY(2px);
+      box-shadow: 
+        inset -1px -1px 0px 0px #090d14,
+        inset 1px 1px 0px 0px #2a374f,
+        0 1px 0 0 #07090e;
+    }
+
+    /* Pixel Box Inset for Inputs */
+    .pixel-input {
+      box-shadow: 
+        inset 3px 3px 0px 0px #000000,
+        inset -1px -1px 0px 0px #222d3d;
+      border: 2px solid #364459;
+    }
+    .pixel-input:focus {
+      outline: none;
+      border-color: #f2ca50;
+      box-shadow: 
+        inset 3px 3px 0px 0px #000000,
+        0 0 0 1px #f2ca50;
+    }
+
+    /* Pixel Checkbox */
+    .pixel-checkbox {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      background: #080c12;
+      border: 2px solid #5a4a28;
+      box-shadow: inset 2px 2px 0px #000;
+      position: relative;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .pixel-checkbox:checked {
+      background: #f2ca50;
+      border-color: #ffe596;
+      box-shadow: inset 2px 2px 0px #fff;
+    }
+    .pixel-checkbox:checked::after {
+      content: '✓';
+      position: absolute;
+      top: -4px;
+      left: 1px;
+      font-size: 14px;
+      color: #0d1117;
+      font-weight: bold;
+      font-family: monospace;
+    }
+
+    /* Scanline screen overlay effect */
+    .scanlines::after {
+      content: " ";
+      display: block;
+      position: fixed;
+      top: 0; left: 0; bottom: 0; right: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+      background-size: 100% 4px;
+      z-index: 999;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-[#090d13] text-slate-200 scanlines selection:bg-goldMid selection:text-black">
+<div class="max-w-md mx-auto relative bg-[#121720] shadow-2xl min-h-screen flex flex-col justify-between items-center border-x-2 border-[#5a4a28] px-4 py-6">
+<!-- BEGIN: TopBranding -->
+<header class="w-full max-w-sm flex flex-col items-center pt-2 pb-4" data-purpose="auth-header">
+<!-- Logo Frame with Pixel Corners -->
+<div class="relative p-2.5 bg-[#0e141d] border-2 border-[#5a4a28] shadow-[0_0_15px_rgba(242,202,80,0.15)] mb-3" data-purpose="crest-container">
+<!-- Pixel Corner Accents -->
+<span class="absolute -top-1 -left-1 w-2 h-2 bg-goldMid"></span>
+<span class="absolute -top-1 -right-1 w-2 h-2 bg-goldMid"></span>
+<span class="absolute -bottom-1 -left-1 w-2 h-2 bg-goldMid"></span>
+<span class="absolute -bottom-1 -right-1 w-2 h-2 bg-goldMid"></span>
+<!-- 16-Bit Crystal Crest Image -->
+<img alt="Brasão de Ascendia" class="w-14 h-14 object-contain" src="data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64' width='128' height='128' shape-rendering='crispEdges'&gt;&lt;rect width='64' height='64' fill='%230d1117'/&gt;&lt;rect x='28' y='4' width='8' height='4' fill='%23ffeaa7'/&gt;&lt;rect x='24' y='8' width='4' height='4' fill='%23d4af37'/&gt;&lt;rect x='36' y='8' width='4' height='4' fill='%23d4af37'/&gt;&lt;rect x='20' y='12' width='4' height='8' fill='%23d4af37'/&gt;&lt;rect x='40' y='12' width='4' height='8' fill='%23d4af37'/&gt;&lt;rect x='16' y='20' width='4' height='8' fill='%23ffeaa7'/&gt;&lt;rect x='44' y='20' width='4' height='8' fill='%23ffeaa7'/&gt;&lt;rect x='12' y='28' width='4' height='8' fill='%23997312'/&gt;&lt;rect x='48' y='28' width='4' height='8' fill='%23997312'/&gt;&lt;rect x='16' y='36' width='4' height='8' fill='%23d4af37'/&gt;&lt;rect x='44' y='36' width='4' height='8' fill='%23d4af37'/&gt;&lt;rect x='20' y='44' width='4' height='8' fill='%23997312'/&gt;&lt;rect x='40' y='44' width='4' height='8' fill='%23997312'/&gt;&lt;rect x='24' y='52' width='4' height='4' fill='%23d4af37'/&gt;&lt;rect x='36' y='52' width='4' height='4' fill='%23d4af37'/&gt;&lt;rect x='28' y='56' width='8' height='4' fill='%23ffeaa7'/&gt;&lt;rect x='28' y='12' width='8' height='8' fill='%2378ffd6'/&gt;&lt;rect x='24' y='20' width='16' height='8' fill='%2300e1d9'/&gt;&lt;rect x='20' y='28' width='24' height='8' fill='%2300b4d8'/&gt;&lt;rect x='28' y='24' width='8' height='12' fill='%23ffffff'/&gt;&lt;rect x='24' y='36' width='16' height='8' fill='%230077b6'/&gt;&lt;rect x='28' y='44' width='8' height='8' fill='%23023e8a'/&gt;&lt;rect x='4' y='28' width='8' height='4' fill='%23ffeaa7'/&gt;&lt;rect x='8' y='24' width='4' height='4' fill='%23d4af37'/&gt;&lt;rect x='52' y='28' width='8' height='4' fill='%23ffeaa7'/&gt;&lt;rect x='52' y='24' width='4' height='4' fill='%23d4af37'/&gt;&lt;/svg&gt;"/>
+</div>
+<!-- Title with Gold Pixel Glow -->
+<h1 class="text-2xl sm:text-3xl text-goldMid tracking-[0.18em] uppercase drop-shadow-[0_3px_0px_#5a4a28] font-bold text-center mb-2">
+      ASCENDIA
+    </h1>
+<!-- Subtitle Banner -->
+<div class="border border-[#3d3119] bg-[#111722]/80 px-3 py-1 flex items-center gap-2">
+<span class="text-[10px] text-goldDark">⚔</span>
+<p class="text-[9px] text-[#dac482] tracking-wider uppercase font-pixel text-center">
+        Forje sua lenda com disciplina
+      </p>
+<span class="text-[10px] text-goldDark">⚔</span>
+</div>
+</header>
+<!-- END: TopBranding -->
+<!-- BEGIN: AuthCentralCard -->
+<main class="w-full max-w-sm my-auto" data-purpose="auth-form-card">
+<div class="relative bg-retroCard border-2 border-goldBorder p-5 sm:p-6 shadow-[0_8px_30px_rgba(0,0,0,0.85)]">
+<!-- Four Pixel Corners -->
+<div class="absolute -top-1.5 -left-1.5 w-3 h-3 bg-goldMid border border-[#3e2d03]"></div>
+<div class="absolute -top-1.5 -right-1.5 w-3 h-3 bg-goldMid border border-[#3e2d03]"></div>
+<div class="absolute -bottom-1.5 -left-1.5 w-3 h-3 bg-goldMid border border-[#3e2d03]"></div>
+<div class="absolute -bottom-1.5 -right-1.5 w-3 h-3 bg-goldMid border border-[#3e2d03]"></div>
+<form action="create_hero.html" class="space-y-4" data-purpose="login-form" method="GET" novalidate>
+<!-- Field 1: Hero Name / Email -->
+<div class="space-y-1.5">
+<label class="block text-[10px] text-goldLight tracking-wider flex items-center gap-1.5">
+<span class="text-goldMid text-[8px]">▶</span>
+<span>NOME DO HERÓI / E-MAIL</span>
+</label>
+<div class="relative flex items-center">
+<span class="absolute left-3 text-goldDark text-xs pointer-events-none select-none font-bold">»</span>
+<input class="pixel-input w-full bg-retroInput text-white pl-8 pr-3 py-3 text-[11px] placeholder:text-slate-600 font-pixel tracking-wide focus:bg-[#0c121c]" placeholder="NOME DO HERÓI OU E-MAIL" required="" type="text"/>
+</div>
+</div>
+<!-- Field 2: Passphrase Rune -->
+<div class="space-y-1.5">
+<div class="flex justify-between items-center">
+<label class="block text-[10px] text-goldLight tracking-wider flex items-center gap-1.5">
+<span class="text-goldMid text-[8px]">▶</span>
+<span>RUNAS DA SENHA</span>
+</label>
+<a class="text-[9px] text-cyanGlow/80 hover:text-cyanGlow hover:underline tracking-tight transition-colors" href="#forgot">
+              ESQUECEU A SENHA?
+            </a>
+</div>
+<div class="relative flex items-center">
+<span class="absolute left-3 text-goldDark text-xs pointer-events-none select-none font-bold">»</span>
+<input class="pixel-input w-full bg-retroInput text-white pl-8 pr-3 py-3 text-[12px] placeholder:text-slate-600 font-pixel tracking-widest focus:bg-[#0c121c]" placeholder="••••••••••••" required="" type="password"/>
+</div>
+</div>
+<!-- Field 3: Honor Oath Checkbox -->
+<div class="pt-1 pb-1">
+<label class="flex items-start gap-3 cursor-pointer group select-none">
+<input checked="" class="pixel-checkbox mt-0.5" type="checkbox"/>
+<span class="text-[9px] text-slate-300 leading-relaxed font-pixel group-hover:text-goldLight transition-colors">
+              Assinar o pacto diário de disciplina
+            </span>
+</label>
+</div>
+<!-- Field 4: Primary Login CTA Button -->
+<div class="pt-2">
+<button class="pixel-btn-gold w-full py-3.5 px-4 text-[#1a1403] font-bold text-xs tracking-wider flex items-center justify-center gap-2" type="submit">
+<span>⚔</span>
+<span>ENTRAR NO REINO</span>
+<span>⚔</span>
+</button>
+</div>
+<!-- Secondary Divider -->
+<div class="relative flex py-2 items-center justify-center">
+<div class="flex-grow border-t border-dashed border-[#2b374a]"></div>
+<span class="flex-shrink mx-2 text-[8px] text-slate-500 uppercase tracking-widest">
+            OU INVOQUE POR
+          </span>
+<div class="flex-grow border-t border-dashed border-[#2b374a]"></div>
+</div>
+<!-- Field 5: OAuth Pixel Buttons -->
+<div class="grid grid-cols-2 gap-3" data-purpose="social-auth-buttons">
+<!-- Google -->
+<button class="pixel-btn-secondary py-2.5 px-3 flex items-center justify-center gap-2 text-slate-300 hover:text-white transition-colors" type="button">
+<svg class="w-3.5 h-3.5 fill-current text-goldLight" viewbox="0 0 24 24">
+<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"></path>
+</svg>
+<span class="text-[9px] font-pixel">GOOGLE</span>
+</button>
+<!-- Apple -->
+<button class="pixel-btn-secondary py-2.5 px-3 flex items-center justify-center gap-2 text-slate-300 hover:text-white transition-colors" type="button">
+<svg class="w-3.5 h-3.5 fill-current text-cyanGlow" viewbox="0 0 24 24">
+<path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.84c.65-.79 1.1-1.9 0.98-3.01-1 .04-2.19.67-2.88 1.48-.61.71-1.14 1.84-1 2.93 1.12.09 2.25-.59 2.9-1.4z"></path>
+</svg>
+<span class="text-[9px] font-pixel">APPLE</span>
+</button>
+</div>
+</form>
+</div>
+</main>
+<!-- END: AuthCentralCard -->
+<!-- BEGIN: ServerFooter -->
+<footer class="w-full max-w-sm pt-4 pb-2" data-purpose="server-status-footer">
+<div class="border border-[#232d3d] bg-[#0c1118]/90 py-2.5 px-3 text-center flex items-center justify-center gap-2">
+<span class="inline-block w-2 h-2 bg-cyanGlow shadow-[0_0_6px_#00e1d9] animate-pulse"></span>
+<p class="text-[8px] text-slate-400 font-pixel tracking-wide">
+        SERVIDOR DO REINO: <span class="text-goldMid">CIDADELA DE AETHELGARD</span> <span class="text-slate-500">[v2.4]</span>
+</p>
+</div>
+</footer>
+<!-- END: ServerFooter -->
+</div>
 </body></html>

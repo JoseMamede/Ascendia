@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Ascendia - Forje seu Herói</title>
+<!-- Tailwind CSS v3 with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Retro Pixel Font (Press Start 2P) -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;family=VT323&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            retro: {
+              bg: '#0c0f17',
+              panel: '#151d2a',
+              panelBorder: '#2e3d52',
+              goldBorder: '#806328',
+              goldLight: '#ffd45e',
+              goldDark: '#443213',
+              amberHighlight: '#f6ad55',
+              crimson: '#e53e3e',
+              azure: '#38bdf8',
+              neonCyan: '#22d3ee',
+              manaBlue: '#60a5fa'
+            }
+          },
+          fontFamily: {
+            pixel: ['"Press Start 2P"', 'monospace'],
+            vt: ['"VT323"', 'monospace']
+          },
+          boxShadow: {
+            'pixel-gold': 'inset -2px -2px 0px 0px #443213, inset 2px 2px 0px 0px #ffd45e',
+            'pixel-dark': 'inset 2px 2px 0px 0px #090b10, inset -2px -2px 0px 0px #243144',
+            'pixel-btn': '0 4px 0 #3d2c0b, 0 6px 0 #000'
+          }
+        }
+      }
+    }
+  </script>
+<!-- BEGIN: Custom Retro Styles -->
+<style data-purpose="retro-fx">
+    /* Scanline overlay for vintage CRT SNES flavor */
+    body {
+      background-color: #090d13;
+      background-image: 
+        linear-gradient(rgba(18, 23, 32, 0.9) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(18, 23, 32, 0.9) 1px, transparent 1px);
+      background-size: 16px 16px;
+      image-rendering: pixelated;
+    }
+
+    /* Pixelated borders using classic multi-step shadows & borders */
+    .pixel-box {
+      border: 2px solid #5a441e;
+      outline: 2px solid #10151f;
+      box-shadow: 0 0 0 2px #d4a339;
+    }
+
+    .pixel-inner-frame {
+      box-shadow: inset 0 0 0 2px #443213, inset 0 0 0 4px #ffd45e;
+    }
+
+    /* Pixel corner accents */
+    .corner-bracket {
+      position: relative;
+    }
+    .corner-bracket::before, .corner-bracket::after {
+      content: '';
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background-color: #ffd45e;
+    }
+    .corner-bracket::before { top: -2px; left: -2px; }
+    .corner-bracket::after { bottom: -2px; right: -2px; }
+
+    /* Segmented pixel stat gauge */
+    .pixel-meter-seg {
+      height: 8px;
+      flex: 1;
+      border: 1px solid #000;
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    /* Prevent iOS rubber-banding and optimize tap */
+    html, body {
+      overscroll-behavior-y: none;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+  </style>
+<!-- END: Custom Retro Styles -->
+</head>
+<body class="min-h-screen bg-[#090d13] text-slate-200 font-pixel antialiased">
+<div class="max-w-md mx-auto relative bg-[#121720] shadow-2xl min-h-screen flex flex-col justify-between p-4 border-x-2 border-[#5a4a28] overflow-x-hidden">
+<!-- BEGIN: MainHeader -->
+<header class="w-full pt-2 pb-3 text-center flex flex-col items-center">
+<!-- Top Step Badge -->
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-retro-panel border border-retro-goldBorder text-[9px] text-retro-goldLight uppercase tracking-widest shadow-sm mb-3">
+<span class="w-2 h-2 bg-retro-goldLight inline-block animate-pulse"></span>
+      ETAPA I: DESPERTAR
+      <span class="w-2 h-2 bg-retro-goldLight inline-block animate-pulse"></span>
+</div>
+<!-- Title Banner -->
+<h1 class="text-xl sm:text-2xl text-retro-goldLight font-bold tracking-wider drop-shadow-[0_2px_0_#443213] mb-1">
+      ASCENDIA
+    </h1>
+<p class="text-[10px] text-slate-400 font-vt uppercase tracking-widest text-xs">
+      ⚔ FORJE SUA LENDA COM DISCIPLINA ⚔
+    </p>
+</header>
+<!-- END: MainHeader -->
+<!-- BEGIN: MainContent -->
+<main class="w-full flex-1 flex flex-col justify-center my-auto space-y-4">
+<!-- BEGIN: ClassSelectorSection -->
+<section class="bg-retro-panel border-2 border-retro-goldBorder p-3 relative shadow-2xl" data-purpose="class-carousel-card">
+<!-- Decorative pixel corners -->
+<span class="absolute -top-1 -left-1 w-2 h-2 bg-retro-goldLight"></span>
+<span class="absolute -top-1 -right-1 w-2 h-2 bg-retro-goldLight"></span>
+<span class="absolute -bottom-1 -left-1 w-2 h-2 bg-retro-goldLight"></span>
+<span class="absolute -bottom-1 -right-1 w-2 h-2 bg-retro-goldLight"></span>
+<!-- Class Selection Tabs -->
+<div class="grid grid-cols-2 gap-2 mb-3">
+<button class="py-2 text-[9px] font-pixel border-2 border-retro-goldLight bg-retro-goldLight text-black transition-all font-bold flex items-center justify-center gap-1 shadow-sm" id="tab-iron" onclick="selectClass('iron')" type="button">
+<span>⚔</span> BASTIÃO DE FERRO
+        </button>
+<button class="py-2 text-[9px] font-pixel border-2 border-slate-700 bg-black/40 text-slate-400 hover:text-slate-200 transition-all font-bold flex items-center justify-center gap-1" id="tab-arcane" onclick="selectClass('arcane')" type="button">
+<span>✧</span> ERUDITO ARCANO
+        </button>
+</div>
+<!-- Core Carousel Interactive Area -->
+<div class="relative flex items-center justify-between gap-2 px-1">
+<!-- Left Arrow Button -->
+<button aria-label="Classe anterior" class="w-8 h-10 bg-retro-goldDark/70 active:bg-retro-goldLight active:text-black border-2 border-retro-goldBorder text-retro-goldLight flex items-center justify-center font-pixel text-xs hover:border-retro-goldLight cursor-pointer shadow-pixel-dark transition-transform active:translate-y-0.5" onclick="toggleCarousel()" type="button">
+          &lt;
+        </button>
+<!-- Portrait Display Area with Gilded Frame -->
+<div class="relative flex-1 max-w-[210px] aspect-square mx-auto p-1.5 bg-black/70 border-2 border-retro-goldBorder shadow-inner">
+<div class="w-full h-full relative overflow-hidden border border-retro-goldDark">
+<!-- Iron Bastion Portrait -->
+<img alt="Paladino do Bastião de Ferro" class="w-full h-full object-cover transition-opacity duration-300 block" id="portrait-iron" src="https://lh3.googleusercontent.com/aida/ALJJyrDm6DokmiSm4xNAuHGuYG3fgRmn5efj1Zag05RHfbXjDcfZzPTBW8wh2Ee42gK4txtuYsQaP8CVmFgW-Up1FWiCVhjT1OLUMmCxgDjmNp_Oe8n57a9Envn-hyhlZMBNMKSrMzphhaUJ3xx8OTXkUS74kEBCm47kegpgTRPeWYIFpiUjB0zqvKnzOeEvMJcwXhIO65PvSMl0QgYDlEmKXcuxaByiyRCfdEZI9fX9MSg"/>
+<!-- Arcane Scholar Portrait -->
+<img alt="Retrato pixel art de uma maga Erudita Arcana com vestes celestiais azuis e violetas, portando um cristal rúnico, em moldura dourada" class="w-full h-full object-cover transition-opacity duration-300 hidden" id="portrait-arcane" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiUIuO3GkPySn9FShWrYdiyVpc63rveUeq3wDTCnqvFKLKYeR8q7JmcJvRfFT9tuMy1FPDdo2ki_wqZZmwXw4kQDfwmxsELT2EsgZHxmCM3GTsDH2T7gq9GLOuQDOyDQ0oTOsaQNZFZUAduj3uq6_R6ucQlPQxbkXtpzVCHJHl5J3-oZQ7kV1cJrp6TpKtMfb44hJf2jop3x6M5FBEL-SuRjvVoiYC5BjXyiEWlNY"/>
+</div>
+<!-- Class Calling Pill overlay -->
+<div class="absolute bottom-2 left-1/2 -translate-x-1/2 px-2.5 py-0.5 bg-black/90 border border-retro-goldLight text-[8px] tracking-wider text-retro-goldLight whitespace-nowrap shadow-md" id="role-tag">
+            GUERREIRO / TANQUE &amp; VIGOR
+          </div>
+</div>
+<!-- Right Arrow Button -->
+<button aria-label="Próxima classe" class="w-8 h-10 bg-retro-goldDark/70 active:bg-retro-goldLight active:text-black border-2 border-retro-goldBorder text-retro-goldLight flex items-center justify-center font-pixel text-xs hover:border-retro-goldLight cursor-pointer shadow-pixel-dark transition-transform active:translate-y-0.5" onclick="toggleCarousel()" type="button">
+          &gt;
+        </button>
+</div>
+<!-- Class Header and Lore Subtitle -->
+<div class="mt-3 text-center">
+<h2 class="text-sm font-pixel text-retro-goldLight tracking-wider uppercase" id="class-title">
+          Bastião de Ferro
+        </h2>
+<p class="text-xs font-vt text-slate-300 tracking-wide mt-0.5" id="class-desc">
+          "Perseverança inabalável contra o torpor físico e o esgotamento."
+        </p>
+</div>
+<!-- BEGIN: StatBoostsSection -->
+<div class="mt-3 bg-black/50 p-2.5 border border-slate-800 space-y-2">
+<!-- Stat Row 1 -->
+<div>
+<div class="flex justify-between items-center text-[8px] mb-1">
+<span class="text-slate-300" id="stat1-label">BÔNUS DE PV</span>
+<span class="text-retro-crimson font-bold" id="stat1-val">+40 PV</span>
+</div>
+<!-- 16-Bit Segmented Meter -->
+<div class="flex gap-1" id="stat1-meter">
+<div class="pixel-meter-seg bg-red-600"></div>
+<div class="pixel-meter-seg bg-red-600"></div>
+<div class="pixel-meter-seg bg-red-600"></div>
+<div class="pixel-meter-seg bg-red-600"></div>
+<div class="pixel-meter-seg bg-red-950"></div>
+</div>
+</div>
+<!-- Stat Row 2 -->
+<div>
+<div class="flex justify-between items-center text-[8px] mb-1">
+<span class="text-slate-300" id="stat2-label">XP DE HÁBITO</span>
+<span class="text-retro-goldLight font-bold" id="stat2-val">+15% DE BÔNUS</span>
+</div>
+<div class="flex gap-1" id="stat2-meter">
+<div class="pixel-meter-seg bg-amber-500"></div>
+<div class="pixel-meter-seg bg-amber-500"></div>
+<div class="pixel-meter-seg bg-amber-500"></div>
+<div class="pixel-meter-seg bg-amber-950"></div>
+<div class="pixel-meter-seg bg-amber-950"></div>
+</div>
+</div>
+<!-- Special Passive Trait Badge -->
+<div class="pt-1 flex items-center justify-between border-t border-slate-800/80 text-[8px]">
+<span class="text-slate-400">TRAÇO DE CLASSE:</span>
+<span class="text-retro-neonCyan font-bold tracking-wide" id="trait-badge">
+            [ARMADURA DA TENACIDADE]
+          </span>
+</div>
+</div>
+<!-- END: StatBoostsSection -->
+</section>
+<!-- END: ClassSelectorSection -->
+<!-- BEGIN: HeroNameInput -->
+<section class="bg-retro-panel border-2 border-slate-700 p-3 relative" data-purpose="hero-name-form">
+<label class="block text-[9px] text-retro-goldLight tracking-wider uppercase mb-1.5 flex items-center gap-1.5" for="hero-name">
+<span class="text-retro-amberHighlight">▶</span> NOME DO HERÓI / APELIDO NA GUILDA:
+      </label>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none text-retro-goldLight text-xs">
+          »
+        </div>
+<input autocomplete="off" autocorrect="off" class="w-full bg-black border-2 border-retro-goldBorder text-slate-100 placeholder-slate-600 text-[10px] pl-7 pr-3 py-2.5 focus:ring-0 focus:border-retro-goldLight focus:outline-none font-pixel shadow-inner" id="hero-name" placeholder="Valerie de Ashfell" type="text" value="Valerie de Ashfell"/>
+</div>
+<p class="text-[8px] text-slate-400 font-vt text-right mt-1 tracking-wider">
+        PODE SER ALTERADO A QUALQUER MOMENTO NA TAVERNA
+      </p>
+</section>
+<!-- END: HeroNameInput -->
+</main>
+<!-- END: MainContent -->
+<!-- BEGIN: BottomCta -->
+<footer class="w-full pt-2 pb-1">
+<a class="w-full block py-3.5 px-4 text-center font-pixel text-xs tracking-wider uppercase font-bold text-black bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-500 border-2 border-yellow-200 active:translate-y-1 shadow-[0_4px_0_#443213] hover:brightness-110 active:shadow-none transition-all cursor-pointer" href="dashboard.html" id="submit-cta">
+      ⚔ FORJAR HERÓI E ENTRAR NO REINO ⚔
+    </a>
+<div class="text-center mt-2.5 text-[8px] text-slate-500 font-vt tracking-widest uppercase">
+      CRÔNICAS DE ASCENDIA • CIDADELA DE AETHELGARD [V2.4]
+    </div>
+</footer>
+<!-- END: BottomCta -->
+<!-- BEGIN: LogicScript -->
+<script data-purpose="class-selection-carousel">
+    let currentClass = 'iron';
+
+    const classData = {
+      iron: {
+        title: "Bastião de Ferro",
+        role: "GUERREIRO / TANQUE & VIGOR",
+        lore: '"Perseverança inabalável contra o torpor físico e o esgotamento."',
+        stat1Label: "BÔNUS DE PV",
+        stat1Val: "+40 PV",
+        stat1Color: "bg-red-600",
+        stat1Off: "bg-red-950",
+        stat1ActiveCount: 4,
+        stat2Label: "XP DE HÁBITO",
+        stat2Val: "+15% DE BÔNUS",
+        stat2Color: "bg-amber-500",
+        stat2Off: "bg-amber-950",
+        stat2ActiveCount: 3,
+        trait: "[ARMADURA DA TENACIDADE]"
+      },
+      arcane: {
+        title: "Erudito Arcano",
+        role: "MAGO / FOCO & ESTUDO PROFUNDO",
+        lore: '"Canalize o fluxo de mana cristalina para manter a concentração profunda."',
+        stat1Label: "RESERVA DE MANA",
+        stat1Val: "+50 PM",
+        stat1Color: "bg-blue-500",
+        stat1Off: "bg-blue-950",
+        stat1ActiveCount: 5,
+        stat2Label: "PROTEÇÃO DE SEQUÊNCIA",
+        stat2Val: "+20% DE CONSTÂNCIA",
+        stat2Color: "bg-cyan-400",
+        stat2Off: "bg-cyan-950",
+        stat2ActiveCount: 4,
+        trait: "[MULTIPLICADOR DE FOCO]"
+      }
+    };
+
+    function renderMeters(containerId, activeCount, activeColor, inactiveColor, total = 5) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      container.innerHTML = '';
+      for (let i = 0; i < total; i++) {
+        const seg = document.createElement('div');
+        seg.className = `pixel-meter-seg ${i < activeCount ? activeColor : inactiveColor}`;
+        container.appendChild(seg);
+      }
+    }
+
+    function selectClass(className) {
+      currentClass = className;
+      const data = classData[className];
+
+      // Update Tab Styles
+      const tabIron = document.getElementById('tab-iron');
+      const tabArcane = document.getElementById('tab-arcane');
+
+      if (className === 'iron') {
+        tabIron.className = "py-2 text-[9px] font-pixel border-2 border-retro-goldLight bg-retro-goldLight text-black transition-all font-bold flex items-center justify-center gap-1 shadow-sm";
+        tabArcane.className = "py-2 text-[9px] font-pixel border-2 border-slate-700 bg-black/40 text-slate-400 hover:text-slate-200 transition-all font-bold flex items-center justify-center gap-1";
+        
+        document.getElementById('portrait-iron').classList.remove('hidden');
+        document.getElementById('portrait-arcane').classList.add('hidden');
+      } else {
+        tabArcane.className = "py-2 text-[9px] font-pixel border-2 border-retro-neonCyan bg-retro-neonCyan text-black transition-all font-bold flex items-center justify-center gap-1 shadow-sm";
+        tabIron.className = "py-2 text-[9px] font-pixel border-2 border-slate-700 bg-black/40 text-slate-400 hover:text-slate-200 transition-all font-bold flex items-center justify-center gap-1";
+        
+        document.getElementById('portrait-iron').classList.add('hidden');
+        document.getElementById('portrait-arcane').classList.remove('hidden');
+      }
+
+      // Update Texts
+      document.getElementById('role-tag').textContent = data.role;
+      document.getElementById('class-title').textContent = data.title;
+      document.getElementById('class-desc').textContent = data.lore;
+      document.getElementById('trait-badge').textContent = data.trait;
+
+      // Update Stat 1
+      document.getElementById('stat1-label').textContent = data.stat1Label;
+      const stat1Val = document.getElementById('stat1-val');
+      stat1Val.textContent = data.stat1Val;
+      stat1Val.className = className === 'iron' ? 'text-retro-crimson font-bold' : 'text-retro-manaBlue font-bold';
+      renderMeters('stat1-meter', data.stat1ActiveCount, data.stat1Color, data.stat1Off);
+
+      // Update Stat 2
+      document.getElementById('stat2-label').textContent = data.stat2Label;
+      const stat2Val = document.getElementById('stat2-val');
+      stat2Val.textContent = data.stat2Val;
+      stat2Val.className = className === 'iron' ? 'text-retro-goldLight font-bold' : 'text-retro-neonCyan font-bold';
+      renderMeters('stat2-meter', data.stat2ActiveCount, data.stat2Color, data.stat2Off);
+    }
+
+    function toggleCarousel() {
+      selectClass(currentClass === 'iron' ? 'arcane' : 'iron');
+    }
+  </script>
+<!-- END: LogicScript -->
+</div>
+</body></html>
